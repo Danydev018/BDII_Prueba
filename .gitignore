@@ -1,0 +1,22 @@
+# Entorno virtual de Python
+venv/
+env/
+.venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Archivos de configuración de IDE (opcional, pero recomendado)
+.idea/  # Para PyCharm
+.vscode/ # Para VS Code
+
+# Archivos de datos sensibles o temporales (si aplica)
+*.log
+*.sqlite3
+.env 
+
+# Archivos de instalación de dependencias (generalmente no se versionan)
+pip-wheel-metadata/
