@@ -1,0 +1,612 @@
+/*
+ * General & Reset
+ * Resetea márgenes, paddings y establece box-sizing para un control predecible del diseño.
+ */
+:root {
+    --color-background: #1A1A1A; /* Gris oscuro para el fondo */
+    --color-text-primary: #FFFFFF; /* Blanco para texto principal */
+    --color-text-secondary: #B0B0B0; /* Gris claro para texto secundario */
+    --color-accent: #007BFF; /* Azul vibrante como acento */
+    --color-accent-hover: #0056b3; /* Azul más oscuro para hover */
+    --color-card-bg: #2B2B2B; /* Fondo de tarjetas */
+    --color-border: #444444; /* Borde sutil */
+    --player-height: 80px; /* Altura del reproductor fijo */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif; /* Fuente principal del cuerpo */
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6; /* Espaciado de línea para legibilidad */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el footer esté en la parte inferior */
+    padding-bottom: var(--player-height); /* Espacio para el reproductor fijo */
+}
+
+/*
+ * Contenedores
+ * Para centrar y limitar el ancho del contenido.
+ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Padding horizontal para evitar que el contenido toque los bordes */
+}
+
+/*
+ * Header
+ * Estilo para la cabecera principal.
+ */
+.main-header {
+    background-color: var(--color-background);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky; /* Sticky header para que se mantenga arriba al hacer scroll */
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Lato', sans-serif; /* Fuente diferente para el logo */
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.main-nav .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Espacio entre los elementos del menú */
+}
+
+.main-nav .nav-links a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.1rem;
+    transition: color 0.3s ease; /* Transición suave para el hover */
+}
+
+.main-nav .nav-links a:hover {
+    color: var(--color-accent); /* Color de acento al pasar el cursor */
+}
+
+.main-nav .search-icon {
+    font-size: 1.2rem;
+}
+
+/* Menú hamburguesa (oculto por defecto en desktop) */
+.nav-toggle {
+    display: none; /* Oculto en pantallas grandes */
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/*
+ * Main Content
+ * Estilos para las secciones principales.
+ */
+.main-content {
+    flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
+    padding: 40px 0 60px 0; /* Padding superior e inferior */
+}
+
+h2 {
+    font-family: 'Lato', sans-serif;
+    font-size: 2.2rem;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 60px; /* Espacio extra para separar secciones */
+    font-weight: 700;
+}
+
+/* Hero Section */
+.hero-section {
+    margin-bottom: 60px;
+}
+
+.hero-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-card-bg);
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que la imagen no se salga */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    min-height: 300px;
+}
+
+.hero-image {
+    width: 50%;
+    height: 300px; /* Altura fija para la imagen */
+    object-fit: cover; /* Recorta la imagen para que cubra el espacio */
+}
+
+.hero-info {
+    width: 50%;
+    padding: 40px;
+    text-align: left;
+}
+
+.hero-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-align: left; /* Alineación a la izquierda dentro de la tarjeta */
+}
+
+.hero-info p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 25px;
+}
+
+.hero-player-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.hero-player-controls .play-btn {
+    background-color: var(--color-accent);
+    color: var(--color-text-primary);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero-player-controls .play-btn:hover {
+    background-color: var(--color-accent-hover);
+}
+
+.hero-player-controls span {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+/* Latest Releases / Album Grid */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
+    gap: 30px; /* Espacio entre las tarjetas de álbum */
+    margin-bottom: 60px;
+}
+
+.album-card {
+    background-color: var(--color-card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Para posicionar el botón de play */
+}
+
+.album-card:hover {
+    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el cursor */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.album-card img {
+    width: 100%;
+    height: 200px; /* Altura fija para la carátula */
+    object-fit: cover;
+    display: block;
+}
+
+.album-info {
+    padding: 15px;
+}
+
+.album-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: var(--color-text-primary);
+}
+
+.album-info p {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.album-card .play-small {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.album-card:hover .play-small {
+    opacity: 1; /* Visible al pasar el cursor */
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+/* Featured Artists */
+.artists-carousel {
+    display: flex;
+    overflow-x: auto; /* Permite scroll horizontal */
+    gap: 25px;
+    padding-bottom: 20px; /* Espacio para la barra de scroll */
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: var(--color-accent) var(--color-card-bg); /* Para Firefox */
+}
+
+/* Estilos para la barra de scroll en navegadores Webkit (Chrome, Safari) */
+.artists-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.artists-carousel::-webkit-scrollbar-track {
+    background: var(--color-card-bg);
+    border-radius: 10px;
+}
+
+.artists-carousel::-webkit-scrollbar-thumb {
+    background-color: var(--color-accent);
+    border-radius: 10px;
+    border: 2px solid var(--color-card-bg);
+}
+
+
+.artist-card {
+    flex-shrink: 0; /* Evita que las tarjetas se encojan */
+    width: 180px; /* Ancho fijo para las tarjetas de artista */
+    background-color: var(--color-card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding-bottom: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.artist-card img {
+    width: 100%;
+    height: 180px; /* Altura fija para la imagen del artista */
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 15px;
+}
+
+.artist-card h3 {
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+}
+
+
+/*
+ * Footer
+ * Estilos para el pie de página.
+ */
+.main-footer {
+    background-color: var(--color-background);
+    color: var(--color-text-secondary);
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-content .social-links a {
+    color: var(--color-text-secondary);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-content .social-links a:hover {
+    color: var(--color-accent);
+}
+
+.footer-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.footer-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--color-accent);
+}
+
+.main-footer p {
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+
+/*
+ * Fixed Player (Reproductor Fijo)
+ * Posicionamiento en la parte inferior.
+ */
+.fixed-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-background);
+    border-top: 1px solid var(--color-border);
+    height: var(--player-height);
+    display: flex;
+    align-items: center;
+    z-index: 200; /* Asegura que esté por encima de otros elementos */
+    padding: 0 20px;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fixed-player .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.fixed-player .player-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.fixed-player .player-btn:hover {
+    color: var(--color-accent);
+}
+
+.fixed-player .play-pause-btn {
+    font-size: 1.8rem; /* Botón de play/pausa más grande */
+    color: var(--color-accent);
+}
+
+.fixed-player .play-pause-btn:hover {
+    color: var(--color-accent-hover);
+}
+
+.fixed-player .song-info {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    color: var(--color-text-primary);
+    font-size: 1.1rem;
+    white-space: nowrap; /* Evita que el texto se rompa */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+}
+
+.fixed-player .progress-bar-container {
+    width: 250px; /* Ancho fijo para la barra de progreso */
+    height: 4px;
+    background-color: var(--color-border);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.fixed-player .progress-bar {
+    width: 30%; /* Ejemplo: 30% de progreso. Esto se manejará con JS */
+    height: 100%;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+}
+
+.fixed-player .volume-btn {
+    margin-left: 15px; /* Espacio antes del botón de volumen */
+}
+
+/*
+ * Media Queries (Responsive Design)
+ * Ajustes para diferentes tamaños de pantalla.
+ */
+
+/* Tablets y pantallas más pequeñas */
+@media (max-width: 992px) {
+    .main-nav .nav-links {
+        gap: 20px;
+    }
+
+    .hero-info h2 {
+        font-size: 2rem;
+    }
+
+    .hero-info p {
+        font-size: 1rem;
+    }
+
+    .hero-player-controls .play-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .hero-player-controls span {
+        font-size: 1.1rem;
+    }
+
+    .fixed-player .progress-bar-container {
+        width: 150px; /* Barra de progreso más corta en tablets */
+    }
+}
+
+/* Teléfonos móviles */
+@media (max-width: 768px) {
+    .header-content {
+        flex-wrap: wrap; /* Permite que los elementos salten de línea */
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .main-nav .nav-links {
+        display: none; /* Oculta los enlaces de navegación por defecto */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: var(--color-background);
+        position: absolute;
+        top: 70px; /* Debajo del header */
+        left: 0;
+        padding: 20px 0;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .main-nav .nav-links.active { /* Clase para mostrar el menú con JS */
+        display: flex;
+    }
+
+    .nav-toggle {
+        display: block; /* Muestra el botón hamburguesa */
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .hero-card {
+        flex-direction: column; /* Apila la imagen y la info */
+        text-align: center;
+    }
+
+    .hero-image,
+    .hero-info {
+        width: 100%;
+        height: auto;
+    }
+
+    .hero-info {
+        padding: 25px;
+    }
+
+    .hero-info h2 {
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    .hero-info p {
+        font-size: 0.95rem;
+    }
+
+    .hero-player-controls {
+        justify-content: center; /* Centra los controles en móvil */
+    }
+
+    .album-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Más compacto */
+        gap: 20px;
+    }
+
+    .album-card img {
+        height: 150px;
+    }
+
+    .artist-card {
+        width: 150px;
+    }
+
+    .artist-card img {
+        height: 150px;
+    }
+
+    .fixed-player {
+        height: 70px;
+        padding: 0 15px;
+    }
+
+    .fixed-player .player-controls {
+        gap: 10px;
+        flex-wrap: wrap; /* Permite que los controles salten de línea si es necesario */
+        justify-content: center;
+    }
+
+    .fixed-player .player-btn {
+        font-size: 1.2rem;
+    }
+
+    .fixed-player .play-pause-btn {
+        font-size: 1.5rem;
+    }
+
+    .fixed-player .song-info {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        text-align: center;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+    }
+
+    .fixed-player .progress-bar-container {
+        order: -1; /* Mueve la barra de progreso arriba en el flexbox */
+        width: 80%; /* Más ancha para mejor interacción */
+        margin-bottom: 5px;
+    }
+
+    .fixed-player .volume-btn {
+        display: none; /* Oculta el control de volumen en pantallas muy pequeñas */
+    }
+
+    .footer-content {
+        gap: 15px;
+    }
+
+    .footer-nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fixed-player .progress-bar-container {
+        width: 90%; /* Aún más ancha en pantallas muy pequeñas */
+    }
+}

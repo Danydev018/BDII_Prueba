@@ -1,0 +1,269 @@
+/*
+ * Variables CSS para consistencia
+ * Define colores y otros valores reusables.
+ */
+:root {
+    --color-background: #1A1A1A; /* Gris oscuro para el fondo */
+    --color-text-primary: #FFFFFF; /* Blanco para texto principal */
+    --color-text-secondary: #B0B0B0; /* Gris claro para texto secundario */
+    --color-accent: #007BFF; /* Azul vibrante como acento */
+    --color-accent-hover: #0056b3; /* Azul más oscuro para hover */
+    --color-card-bg: #2B2B2B; /* Fondo de tarjetas/contenedores */
+    --color-border: #444444; /* Borde sutil */
+    --table-header-bg: #333333; /* Fondo para encabezados de tabla */
+    --table-row-even: #262626; /* Fondo para filas pares de tabla */
+    --table-row-hover: #383838; /* Fondo para hover de filas de tabla */
+}
+
+/*
+ * General & Reset
+ * Resetea márgenes, paddings y establece box-sizing para un control predecible del diseño.
+ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif; /* Fuente principal del cuerpo */
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6; /* Espaciado de línea para legibilidad */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenido ocupe al menos la altura de la ventana */
+    overflow-x: hidden; /* Previene scroll horizontal indeseado */
+}
+
+/*
+ * Contenedores
+ * Para centrar y limitar el ancho del contenido.
+ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Padding horizontal para evitar que el contenido toque los bordes */
+}
+
+/*
+ * Header (Minimalista para esta página)
+ * Si solo quieres un header muy simple aquí.
+ */
+.main-header {
+    background-color: var(--color-background);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center; /* Centra el logo */
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* Si decides NO incluir navegación en el header de users.html, puedes quitar .main-nav, .nav-toggle y .nav-links */
+.main-nav {
+    display: none; /* Oculta completamente la navegación si no es necesaria */
+}
+
+/*
+ * Main Content (Contenido principal de la página de usuarios)
+ */
+.main-content {
+    flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
+    padding: 40px 0 60px 0; /* Padding superior e inferior */
+}
+
+.user-list-section {
+    padding: 40px 0;
+    margin-top: 20px; /* Un poco de espacio desde el header */
+}
+
+.section-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 2.2rem;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 20px; /* Ajuste para el título de la sección */
+    font-weight: 700;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+    background-color: var(--color-card-bg); /* Fondo oscuro para la tabla */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+table {
+    width: 100%; /* La tabla ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina los espacios entre las celdas */
+    margin: 0; /* Elimina el margen por defecto de la tabla */
+    color: var(--color-text-primary);
+}
+
+th, td {
+    padding: 15px; /* Más padding para un look más limpio */
+    text-align: left;
+    border-bottom: 1px solid var(--color-border); /* Solo borde inferior */
+}
+
+th {
+    background-color: var(--table-header-bg); /* Fondo ligeramente más claro para el encabezado */
+    color: var(--color-accent); /* Color de acento para los encabezados de la tabla */
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo para las filas pares/impares para mejor legibilidad */
+tbody tr:nth-child(even) {
+    background-color: var(--table-row-even); /* Un gris oscuro ligeramente diferente */
+}
+
+tbody tr:hover {
+    background-color: var(--table-row-hover); /* Efecto hover sutil */
+    cursor: pointer;
+}
+
+td {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary); /* Color secundario para el texto de las celdas */
+}
+
+/* Eliminar el último borde inferior de la tabla */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.no-users-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    padding: 50px;
+    background-color: var(--color-card-bg);
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+
+/*
+ * Footer
+ * Estilos para el pie de página.
+ */
+.main-footer {
+    background-color: var(--color-background);
+    color: var(--color-text-secondary);
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-content .social-links a {
+    color: var(--color-text-secondary);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-content .social-links a:hover {
+    color: var(--color-accent);
+}
+
+.footer-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.footer-nav a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--color-accent);
+}
+
+.main-footer p {
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+
+/*
+ * Media Queries (Responsive Design)
+ * Ajustes para diferentes tamaños de pantalla.
+ */
+
+/* Tablets y pantallas más pequeñas */
+@media (max-width: 992px) {
+    /* No hay ajustes específicos para la tabla aquí, ya que el .table-responsive la maneja */
+}
+
+/* Teléfonos móviles */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 15px 0;
+    }
+    .header-content {
+        flex-direction: column; /* Apila el logo y la nav (si la hubiese) */
+        gap: 10px;
+    }
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .user-list-section {
+        padding: 20px 0;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .table-responsive {
+        padding: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 0.9rem; /* Texto más pequeño en móviles */
+    }
+
+    .footer-content {
+        gap: 15px;
+    }
+
+    .footer-nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

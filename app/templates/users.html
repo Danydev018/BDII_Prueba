@@ -3,37 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuarios</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
+    <title>Usuarios - Tu Música</title>
+    <link rel="stylesheet" href="../static/users.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Usuarios Registrados</h1>
-    {% if users %}
-    <table>
-        <thead>
-            <tr>
-                <th>ID de Usuario</th>
-                <th>Nombre</th>
-                <th>Ciudad</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user.usuario_id }}</td>
-                <td>{{ user.nombre }}</td>
-                <td>{{ user.ciudad }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No hay usuarios para mostrar o ha ocurrido un error.</p>
-    {% endif %}
+
+    <header class="main-header">
+        <div class="header-content container">
+            <a href="index.html" class="logo">
+                <span>Música</span>
+            </a>
+            <nav class="main-nav">
+                <button class="nav-toggle" aria-label="Abrir menú de navegación">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Artistas</a></li>
+                    <li><a href="#">Álbumes</a></li>
+                    <li><a href="#">Playlists</a></li>
+                    <li><a href="#"><i class="fas fa-search search-icon"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content container">
+        <section class="user-list-section">
+            <h2 class="section-title">Usuarios Registrados</h2>
+            {% if users %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID de Usuario</th>
+                            <th>Nombre</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.usuario_id }}</td>
+                            <td>{{ user.nombre }}</td>
+                            <td>{{ user.ciudad }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="no-users-message">No hay usuarios para mostrar o ha ocurrido un error.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+            <p>&copy; 2025 Tu Música. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="fixed-player">
+        <div class="player-controls container">
+            <button class="player-btn"><i class="fas fa-backward-step"></i></button>
+            <button class="player-btn play-pause-btn"><i class="fas fa-play"></i></button>
+            <button class="player-btn"><i class="fas fa-forward-step"></i></button>
+            <div class="song-info">
+                <span>Nombre de la Canción</span> - <span>Artista</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+            <button class="player-btn volume-btn"><i class="fas fa-volume-up"></i></button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
