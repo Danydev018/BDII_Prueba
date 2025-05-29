@@ -3,131 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Música - Minimalista</title>
-    <link rel="stylesheet" href="../static/index.css"> <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>Ritmo Puro - Tu Música, Tu Estilo</title>
+    <link rel="stylesheet" href="../static/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
     <header class="main-header">
-        <div class="header-content container">
-            <a href="#" class="logo">
-                <span>Música</span>
-            </a>
+        <div class="container">
+            <h1 class="logo"><a href="#">Ritmo Puro</a></h1>
             <nav class="main-nav">
-                <button class="nav-toggle" aria-label="Abrir menú de navegación">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="/users">Usuarios</a></li>
-                    <li><a href="/canciones">Canciones</a></li>
-                    <li><a href="#">Playlists</a></li>
-                    <li><a href="#"><i class="fas fa-search search-icon"></i></a></li>
+                <ul>
+                    <li><a href="#featured">Destacado</a></li>
+                    <li><a href="#genres">Géneros</a></li>
+                    <li><a href="#new-releases">Novedades</a></li>
+                    <li><a href="#contact">Contacto</a></li>
                 </ul>
             </nav>
+            <div class="header-actions">
+                <form action="/search_songs" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Buscar música..." class="search-input" value="{{ query if query }}">
+                    <button type="submit" class="icon-button"><i class="fas fa-search"></i></button>
+                </form>
+                <button class="icon-button"><i class="fas fa-user-circle"></i></button>
+            </div>
         </div>
     </header>
 
-    <main class="main-content">
-        <section class="hero-section container">
-            <div class="hero-card">
-                <img src="images/hero-album.jpg" alt="Portada de álbum destacado" class="hero-image">
-                <div class="hero-info">
-                    <h2>Nuevo Lanzamiento: Melodías Urbanas</h2>
-                    <p>Artista: DJ Ritmo</p>
-                    <div class="hero-player-controls">
-                        <button class="play-btn"><i class="fas fa-play"></i></button>
-                        <span>Reproducir ahora</span>
+    <main>
+        <section class="hero-section" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Descubre tu Próxima Obsesión Musical</h2>
+                    <p>Explora un universo de sonidos, desde los clásicos atemporales hasta las últimas tendencias.</p>
+                    <div class="hero-buttons">
+                        <a href="#new-releases" class="btn primary-btn">Explorar Novedades</a>
+                        <a href="#genres" class="btn secondary-btn">Ver Géneros</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="latest-releases container">
-            <h2>Últimos Lanzamientos</h2>
-            <div class="album-grid">
-                <div class="album-card">
-                    <img src="images/album-1.jpg" alt="Portada de álbum 1">
-                    <div class="album-info">
-                        <h3>Vibra Latina</h3>
-                        <p>Ritmo Global</p>
-                        <button class="play-small"><i class="fas fa-play"></i></button>
+        <section class="featured-section" id="featured">
+            <div class="container">
+                <h3>Lo Más Destacado</h3>
+                <div class="featured-grid">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Artista+Nuevo" alt="Artista o Álbum Destacado 1">
+                        <h4>Álbum de la Semana</h4>
+                        <p>Artista Genial</p>
+                        <button class="play-button"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="card">
+                        <img src="https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Lo+Último" alt="Artista o Álbum Destacado 2">
+                        <h4>Single Tendencia</h4>
+                        <p>Banda Increíble</p>
+                        <button class="play-button"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="card">
+                        <img src="https://via.placeholder.com/300x300/3a3a3a/ffffff?text=Top+Hits" alt="Artista o Álbum Destacado 3">
+                        <h4>Playlist del Mes</h4>
+                        <p>Varios Artistas</p>
+                        <button class="play-button"><i class="fas fa-play"></i></button>
                     </div>
                 </div>
-                <div class="album-card">
-                    <img src="images/album-2.jpg" alt="Portada de álbum 2">
-                    <div class="album-info">
-                        <h3>Sueños Digitales</h3>
-                        <p>Cyber Soul</p>
-                        <button class="play-small"><i class="fas fa-play"></i></button>
-                    </div>
-                </div>
-                <div class="album-card">
-                    <img src="images/album-3.jpg" alt="Portada de álbum 3">
-                    <div class="album-info">
-                        <h3>Armonías del Mar</h3>
-                        <p>Océano Profundo</p>
-                        <button class="play-small"><i class="fas fa-play"></i></button>
-                    </div>
-                </div>
-                </div>
+            </div>
         </section>
 
-        <section class="featured-artists container">
-            <h2>Artistas Destacados</h2>
-            <div class="artists-carousel">
-                <div class="artist-card">
-                    <img src="images/artist-1.jpg" alt="Foto de artista 1">
-                    <h3>Luna Cantora</h3>
+        <section class="genres-section" id="genres">
+            <div class="container">
+                <h3>Explora por Género</h3>
+                <div class="genres-grid">
+                    <div class="genre-item pop">Pop</div>
+                    <div class="genre-item rock">Rock</div>
+                    <div class="genre-item electronic">Electrónica</div>
+                    <div class="genre-item hiphop">Hip Hop</div>
+                    <div class="genre-item jazz">Jazz</div>
+                    <div class="genre-item classic">Clásica</div>
                 </div>
-                <div class="artist-card">
-                    <img src="images/artist-2.jpg" alt="Foto de artista 2">
-                    <h3>El Maestro</h3>
+            </div>
+        </section>
+
+        <section class="new-releases-section" id="new-releases">
+            <div class="container">
+                <h3>Novedades Recientes</h3>
+                <div class="releases-list">
+                    <div class="release-item">
+                        <img src="https://via.placeholder.com/100x100/4a4a4a/ffffff?text=Album1" alt="Portada Álbum 1">
+                        <div class="release-info">
+                            <h4>Título de la Canción/Álbum</h4>
+                            <p>Nombre del Artista</p>
+                            <span class="release-date">25 Mayo 2025</span>
+                        </div>
+                        <button class="play-button small"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="release-item">
+                        <img src="https://via.placeholder.com/100x100/5a5a5a/ffffff?text=Album2" alt="Portada Álbum 2">
+                        <div class="release-info">
+                            <h4>Otro Gran Éxito</h4>
+                            <p>Artista Emergente</p>
+                            <span class="release-date">20 Mayo 2025</span>
+                        </div>
+                        <button class="play-button small"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="release-item">
+                        <img src="https://via.placeholder.com/100x100/6a6a6a/ffffff?text=Album3" alt="Portada Álbum 3">
+                        <div class="release-info">
+                            <h4>Single Increíble</h4>
+                            <p>La Banda del Momento</p>
+                            <span class="release-date">18 Mayo 2025</span>
+                        </div>
+                        <button class="play-button small"><i class="fas fa-play"></i></button>
+                    </div>
                 </div>
-                <div class="artist-card">
-                    <img src="images/artist-3.jpg" alt="Foto de artista 3">
-                    <h3>Alma Urbana</h3>
-                </div>
-                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="main-footer">
-        <div class="footer-content container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+    <footer class="main-footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h4>Sobre Ritmo Puro</h4>
+                    <p>La plataforma donde la pasión por la música se encuentra con la innovación. Descubre, comparte y vive la música.</p>
+                </div>
+                <div class="footer-section links">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#">Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section social">
+                    <h4>Síguenos</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
             </div>
-            <nav class="footer-nav">
-                <ul>
-                    <li><a href="#">Privacidad</a></li>
-                    <li><a href="#">Términos</a></li>
-                    <li><a href="#">Contacto</a></li>
-                </ul>
-            </nav>
-            <p>&copy; 2025 Tu Música. Todos los derechos reservados.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ritmo Puro. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
-
-    <div class="fixed-player">
-        <div class="player-controls container">
-            <button class="player-btn"><i class="fas fa-backward-step"></i></button>
-            <button class="player-btn play-pause-btn"><i class="fas fa-play"></i></button>
-            <button class="player-btn"><i class="fas fa-forward-step"></i></button>
-            <div class="song-info">
-                <span>Nombre de la Canción</span> - <span>Artista</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar"></div>
-            </div>
-            <button class="player-btn volume-btn"><i class="fas fa-volume-up"></i></button>
-        </div>
-    </div>
-
-    <script src="js/main.js"></script> </body>
+</body>
 </html>

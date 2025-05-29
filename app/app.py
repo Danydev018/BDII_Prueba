@@ -1,9 +1,12 @@
 # app.py
 from flask import Flask
 from routes import main_bp
+# Variables del .env
 from dotenv import load_dotenv
+# importa variables del sistema
 import os
-from db import get_cassandra_cluster_and_session, teardown_cassandra # Importa El estado de cassandra y sus variables
+# Importa El estado de cassandra y sus variables
+from db import teardown_cassandra
 
 # Cargara las variables del .env
 load_dotenv()

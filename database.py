@@ -64,20 +64,6 @@ def create_cassandra_schema_no_auth(
         session.execute(create_listen_song_by_user_table_query)
         print(f"Tabla '{keyspace_name}.listen_song_by_user' Creada (o ya existe).")
 
-        # Importar datos CSV
-
-        import_date_user = f"""
-        COPY users (usuario_id, nombre, ciudad) FROM 'csv/users.csv' WITH HEADER = true;
-        """
-        session.execute(import_date_user)
-        print(f"Datos de usuario importado")
-
-        import_date_song = f"""
-        COPY song (cacion_id, artista, genero, titulo) FROM 'csv/song.csv' WITH HEADER = true;
-        """
-        session.execute(import_date_song)
-        print(f"Datos de song importado")
-
         print("Esquema de Cassandra creado exitosamente.")
 
     except Exception as e:

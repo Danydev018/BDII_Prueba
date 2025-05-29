@@ -7,22 +7,25 @@ Debian 12 :
 ```bash
   sudo apt install python3-pip
 ```
-## Crear entorno virtual (Python)
+## Crear entorno virtual (Python) y Crear la DB
 
-Crear una carpeta en donde vas a clonar el repositorio
+ Clonar el repositorio
 
 ```bash
-  mkdir App_music
-  cd App_music
+  git clone https://github.com/cockr04ch/BDII_Prueba 
+  cd BDII_Prueba
 ```
+## crear la DB con su respectiva keyspace
+El script que les deje creara automaticamente la keyspace y las tablas : 
+*OJO , ya Cassandra debe estar corriendo(activo)
+```bash
+python database.py
+```
+
 Una vez dentro de la carpeta, crear el entorno virtual de python.
 ## Linux
 ```bash
   python3 -m venv venv
-```
-Ahora clona el proyecto
-```bash
-  git clone https://github.com/cockr04ch/BDII_Prueba 
 ```
 Activar el entorno de python
 ```bash
@@ -36,3 +39,25 @@ Una vez descargadas las dependencias, lanzar el proyecto :
 ```bash
    python app/app.py
  ```
+
+ ## Importar Datos a la DB mediante los CSV
+ 
+ La carpeta csv contiene datos para insertar en la tablas, tienen que hacerlo directemente de Cassandra(cqlsh)
+
+```bash
+cqlsh
+```
+
+usar la Keyspace antes creada
+
+```bash
+USE app_music ;
+```
+
+Comando para insertar datos, dentro de las comillas poner la ruta en la que se encuntra el csv , OJO no pongan los <> :
+ejemplo con song : 
+
+```bash
+COPY song (cacion_id , titulo , artista , genero ) FROM '/home/daniel/DBII_Prueba/csv/song.csv' WITH HEADER = true ;
+COPY users (user_id , ciudad , nombre ) FROM '/home/daniel/DBII_Prueba/csv/users.csv' WITH HEADER = true ;
+```

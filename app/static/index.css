@@ -1,18 +1,25 @@
-/*
- * General & Reset
- * Resetea márgenes, paddings y establece box-sizing para un control predecible del diseño.
- */
+/* Importación de fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap');
+
+/* Variables CSS para una fácil personalización */
 :root {
-    --color-background: #1A1A1A; /* Gris oscuro para el fondo */
-    --color-text-primary: #FFFFFF; /* Blanco para texto principal */
-    --color-text-secondary: #B0B0B0; /* Gris claro para texto secundario */
-    --color-accent: #007BFF; /* Azul vibrante como acento */
-    --color-accent-hover: #0056b3; /* Azul más oscuro para hover */
-    --color-card-bg: #2B2B2B; /* Fondo de tarjetas */
-    --color-border: #444444; /* Borde sutil */
-    --player-height: 80px; /* Altura del reproductor fijo */
+    --primary-color: #6a11cb; /* Morado vibrante */
+    --secondary-color: #2575fc; /* Azul eléctrico */
+    --accent-color: #ff007f; /* Magenta llamativo para detalles */
+    --dark-bg: #121212; /* Fondo oscuro casi negro */
+    --light-bg: #1e1e1e; /* Fondo ligeramente más claro para secciones */
+    --text-color: #e0e0e0; /* Color de texto claro */
+    --light-text: #b0b0b0; /* Color de texto secundario */
+    --border-color: #333;
+    --card-bg: #2a2a2a;
+    --button-hover-darken: #4a0d8e; /* Para oscurecer el botón al hover */
+    --button-hover-lighten: #3080ff; /* Para aclarar el botón al hover */
+
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Poppins', sans-serif;
 }
 
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -20,228 +27,308 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif; /* Fuente principal del cuerpo */
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
-    line-height: 1.6; /* Espaciado de línea para legibilidad */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Asegura que el footer esté en la parte inferior */
-    padding-bottom: var(--player-height); /* Espacio para el reproductor fijo */
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color);
+    background: var(--dark-bg);
+    overflow-x: hidden; /* Evita el scroll horizontal */
 }
 
-/*
- * Contenedores
- * Para centrar y limitar el ancho del contenido.
- */
+a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+ul {
+    list-style: none;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* Padding horizontal para evitar que el contenido toque los bordes */
+    padding: 0 20px;
 }
 
-/*
- * Header
- * Estilo para la cabecera principal.
- */
+/* Header */
 .main-header {
-    background-color: var(--color-background);
-    padding: 20px 0;
-    border-bottom: 1px solid var(--color-border);
-    position: sticky; /* Sticky header para que se mantenga arriba al hacer scroll */
+    background: var(--light-bg);
+    padding: 15px 0;
+    position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.header-content {
+.main-header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
 
 .logo {
-    font-family: 'Lato', sans-serif; /* Fuente diferente para el logo */
-    font-weight: 700;
+    font-family: var(--font-heading);
     font-size: 1.8rem;
-    color: var(--color-text-primary);
-    text-decoration: none;
-    letter-spacing: 1px;
+    font-weight: 700;
 }
 
-.main-nav .nav-links {
-    list-style: none;
+.logo a {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: var(--secondary-color);
+}
+
+.main-nav ul {
     display: flex;
-    gap: 30px; /* Espacio entre los elementos del menú */
 }
 
-.main-nav .nav-links a {
-    color: var(--color-text-primary);
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 1.1rem;
-    transition: color 0.3s ease; /* Transición suave para el hover */
+.main-nav ul li {
+    margin-left: 30px;
 }
 
-.main-nav .nav-links a:hover {
-    color: var(--color-accent); /* Color de acento al pasar el cursor */
+.main-nav ul li a {
+    font-weight: 600;
+    padding: 5px 0;
+    position: relative;
+    color: var(--light-text);
 }
 
-.main-nav .search-icon {
-    font-size: 1.2rem;
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
-/* Menú hamburguesa (oculto por defecto en desktop) */
-.nav-toggle {
-    display: none; /* Oculto en pantallas grandes */
+.main-nav ul li a:hover::after,
+.main-nav ul li a.active::after {
+    width: 100%;
+}
+
+.main-nav ul li a:hover,
+.main-nav ul li a.active {
+    color: var(--text-color);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    width: 180px;
+    transition: width 0.3s ease, border-color 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: var(--light-text);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    width: 220px;
+}
+
+.icon-button {
     background: none;
     border: none;
-    color: var(--color-text-primary);
+    color: var(--light-text);
     font-size: 1.5rem;
+    margin-left: 15px;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-/*
- * Main Content
- * Estilos para las secciones principales.
- */
-.main-content {
-    flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
-    padding: 40px 0 60px 0; /* Padding superior e inferior */
-}
-
-h2 {
-    font-family: 'Lato', sans-serif;
-    font-size: 2.2rem;
-    color: var(--color-text-primary);
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 60px; /* Espacio extra para separar secciones */
-    font-weight: 700;
+.icon-button:hover {
+    color: var(--primary-color);
 }
 
 /* Hero Section */
 .hero-section {
-    margin-bottom: 60px;
-}
-
-.hero-card {
-    display: flex;
-    align-items: center;
-    background-color: var(--color-card-bg);
-    border-radius: 8px;
-    overflow: hidden; /* Asegura que la imagen no se salga */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    min-height: 300px;
-}
-
-.hero-image {
-    width: 50%;
-    height: 300px; /* Altura fija para la imagen */
-    object-fit: cover; /* Recorta la imagen para que cubra el espacio */
-}
-
-.hero-info {
-    width: 50%;
-    padding: 40px;
-    text-align: left;
-}
-
-.hero-info h2 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    text-align: left; /* Alineación a la izquierda dentro de la tarjeta */
-}
-
-.hero-info p {
-    font-size: 1.1rem;
-    color: var(--color-text-secondary);
-    margin-bottom: 25px;
-}
-
-.hero-player-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.hero-player-controls .play-btn {
-    background-color: var(--color-accent);
-    color: var(--color-text-primary);
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.hero-player-controls .play-btn:hover {
-    background-color: var(--color-accent-hover);
-}
-
-.hero-player-controls span {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-
-/* Latest Releases / Album Grid */
-.album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
-    gap: 30px; /* Espacio entre las tarjetas de álbum */
-    margin-bottom: 60px;
-}
-
-.album-card {
-    background-color: var(--color-card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: #fff;
+    padding: 100px 0;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Para posicionar el botón de play */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    position: relative;
+    overflow: hidden;
+    /* Efecto de partículas o degradado animado */
+    animation: gradient-animation 15s ease infinite;
+    background-size: 200% 200%;
 }
 
-.album-card:hover {
-    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el cursor */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-.album-card img {
-    width: 100%;
-    height: 200px; /* Altura fija para la carátula */
-    object-fit: cover;
-    display: block;
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
 }
 
-.album-info {
-    padding: 15px;
+.hero-content h2 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.album-info h3 {
+.hero-content p {
     font-size: 1.3rem;
-    margin-bottom: 5px;
-    color: var(--color-text-primary);
+    margin-bottom: 40px;
+    opacity: 0.9;
 }
 
-.album-info p {
-    font-size: 0.95rem;
-    color: var(--color-text-secondary);
+.hero-buttons .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.album-card .play-small {
+.primary-btn {
+    background: var(--accent-color);
+    color: #fff;
+    border: 2px solid var(--accent-color);
+}
+
+.primary-btn:hover {
+    background: transparent;
+    color: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.secondary-btn:hover {
+    background: #fff;
+    color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* General Section Styling */
+section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+section h3 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+}
+
+section h3::after {
+    content: '';
     position: absolute;
-    top: 50%;
+    bottom: -10px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
-    color: var(--color-accent);
-    border: 2px solid var(--color-accent);
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+/* Featured Section */
+.featured-section {
+    background: var(--light-bg);
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover img {
+    transform: scale(1.03);
+}
+
+.card h4 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.card p {
+    color: var(--light-text);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.play-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -250,363 +337,451 @@ h2 {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    opacity: 0; /* Oculto por defecto */
-    transition: opacity 0.3s ease, background-color 0.3s ease;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
 
-.album-card:hover .play-small {
-    opacity: 1; /* Visible al pasar el cursor */
-    background-color: rgba(0, 0, 0, 0.9);
+.card:hover .play-button {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-
-/* Featured Artists */
-.artists-carousel {
-    display: flex;
-    overflow-x: auto; /* Permite scroll horizontal */
-    gap: 25px;
-    padding-bottom: 20px; /* Espacio para la barra de scroll */
-    scrollbar-width: thin; /* Para Firefox */
-    scrollbar-color: var(--color-accent) var(--color-card-bg); /* Para Firefox */
+.play-button:hover {
+    transform: scale(1.2);
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
 }
 
-/* Estilos para la barra de scroll en navegadores Webkit (Chrome, Safari) */
-.artists-carousel::-webkit-scrollbar {
-    height: 8px;
-}
-
-.artists-carousel::-webkit-scrollbar-track {
-    background: var(--color-card-bg);
-    border-radius: 10px;
-}
-
-.artists-carousel::-webkit-scrollbar-thumb {
-    background-color: var(--color-accent);
-    border-radius: 10px;
-    border: 2px solid var(--color-card-bg);
-}
-
-
-.artist-card {
-    flex-shrink: 0; /* Evita que las tarjetas se encojan */
-    width: 180px; /* Ancho fijo para las tarjetas de artista */
-    background-color: var(--color-card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    padding-bottom: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.artist-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.artist-card img {
-    width: 100%;
-    height: 180px; /* Altura fija para la imagen del artista */
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: 15px;
-}
-
-.artist-card h3 {
+.play-button.small {
+    width: 40px;
+    height: 40px;
     font-size: 1.2rem;
-    color: var(--color-text-primary);
+    position: static; /* Para las listas de novedades */
+    margin-left: 20px;
+    flex-shrink: 0; /* Evita que el botón se encoja */
+}
+
+/* Genres Section */
+.genres-section {
+    background: var(--dark-bg);
+}
+
+.genres-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.genre-item {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.genre-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.genre-item:hover::before {
+    transform: scaleX(1);
+}
+
+.genre-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+/* Para agregar un color base para cada género (opcional, puedes expandirlo) */
+.genre-item.pop::before { background: #ff4d6d; }
+.genre-item.rock::before { background: #a63a50; }
+.genre-item.electronic::before { background: #3c5b6f; }
+.genre-item.hiphop::before { background: #6b434b; }
+.genre-item.jazz::before { background: #7b6d8d; }
+.genre-item.classic::before { background: #4a5759; }
+
+
+/* New Releases Section */
+.new-releases-section {
+    background: var(--light-bg);
+}
+
+.releases-list {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.release-item {
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.release-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.release-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.release-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.release-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.release-info p {
+    color: var(--light-text);
+    font-size: 0.9rem;
+}
+
+.release-date {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    opacity: 0.7;
+    margin-top: 5px;
+    display: block;
 }
 
 
-/*
- * Footer
- * Estilos para el pie de página.
- */
+/* Footer */
 .main-footer {
-    background-color: var(--color-background);
-    color: var(--color-text-secondary);
-    padding: 30px 0;
-    text-align: center;
-    border-top: 1px solid var(--color-border);
+    background: var(--dark-bg);
+    color: var(--light-text);
+    padding: 60px 0 30px;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.main-footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: left;
 }
 
 .footer-content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 40px;
 }
 
-.footer-content .social-links a {
-    color: var(--color-text-secondary);
-    font-size: 1.5rem;
-    margin: 0 10px;
-    transition: color 0.3s ease;
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 30px;
 }
 
-.footer-content .social-links a:hover {
-    color: var(--color-accent);
+.footer-section h4 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    position: relative;
 }
 
-.footer-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-}
-
-.footer-nav a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.3s ease;
-}
-
-.footer-nav a:hover {
-    color: var(--color-accent);
-}
-
-.main-footer p {
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-
-/*
- * Fixed Player (Reproductor Fijo)
- * Posicionamiento en la parte inferior.
- */
-.fixed-player {
-    position: fixed;
-    bottom: 0;
+.footer-section h4::after {
+    content: '';
+    position: absolute;
     left: 0;
-    width: 100%;
-    background-color: var(--color-background);
-    border-top: 1px solid var(--color-border);
-    height: var(--player-height);
-    display: flex;
-    align-items: center;
-    z-index: 200; /* Asegura que esté por encima de otros elementos */
-    padding: 0 20px;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+    bottom: -5px;
+    width: 40px;
+    height: 2px;
+    background: var(--accent-color);
 }
 
-.fixed-player .player-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
+.footer-section ul li {
+    margin-bottom: 10px;
 }
 
-.fixed-player .player-btn {
-    background: none;
-    border: none;
-    color: var(--color-text-primary);
-    font-size: 1.4rem;
-    cursor: pointer;
+.footer-section ul li a {
+    color: var(--light-text);
     transition: color 0.3s ease;
 }
 
-.fixed-player .player-btn:hover {
-    color: var(--color-accent);
+.footer-section ul li a:hover {
+    color: var(--primary-color);
 }
 
-.fixed-player .play-pause-btn {
-    font-size: 1.8rem; /* Botón de play/pausa más grande */
-    color: var(--color-accent);
+.social-icons a {
+    color: var(--light-text);
+    font-size: 1.5rem;
+    margin-right: 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.fixed-player .play-pause-btn:hover {
-    color: var(--color-accent-hover);
+.social-icons a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
 }
 
-.fixed-player .song-info {
-    flex-grow: 1; /* Ocupa el espacio restante */
-    color: var(--color-text-primary);
-    font-size: 1.1rem;
-    white-space: nowrap; /* Evita que el texto se rompa */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+.footer-bottom {
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    opacity: 0.8;
 }
 
-.fixed-player .progress-bar-container {
-    width: 250px; /* Ancho fijo para la barra de progreso */
-    height: 4px;
-    background-color: var(--color-border);
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.fixed-player .progress-bar {
-    width: 30%; /* Ejemplo: 30% de progreso. Esto se manejará con JS */
-    height: 100%;
-    background-color: var(--color-accent);
-    border-radius: 2px;
-}
-
-.fixed-player .volume-btn {
-    margin-left: 15px; /* Espacio antes del botón de volumen */
-}
-
-/*
- * Media Queries (Responsive Design)
- * Ajustes para diferentes tamaños de pantalla.
- */
-
-/* Tablets y pantallas más pequeñas */
+/* Media Queries para Responsive Design */
 @media (max-width: 992px) {
-    .main-nav .nav-links {
-        gap: 20px;
+    .main-nav ul li {
+        margin-left: 20px;
     }
 
-    .hero-info h2 {
-        font-size: 2rem;
+    .hero-content h2 {
+        font-size: 2.8rem;
     }
 
-    .hero-info p {
-        font-size: 1rem;
-    }
-
-    .hero-player-controls .play-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-
-    .hero-player-controls span {
+    .hero-content p {
         font-size: 1.1rem;
     }
 
-    .fixed-player .progress-bar-container {
-        width: 150px; /* Barra de progreso más corta en tablets */
+    .featured-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
 
-/* Teléfonos móviles */
 @media (max-width: 768px) {
-    .header-content {
-        flex-wrap: wrap; /* Permite que los elementos salten de línea */
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .main-nav .nav-links {
-        display: none; /* Oculta los enlaces de navegación por defecto */
+    .main-header .container {
         flex-direction: column;
-        width: 100%;
-        text-align: center;
-        background-color: var(--color-background);
-        position: absolute;
-        top: 70px; /* Debajo del header */
-        left: 0;
-        padding: 20px 0;
-        border-top: 1px solid var(--color-border);
+        align-items: flex-start;
     }
 
-    .main-nav .nav-links.active { /* Clase para mostrar el menú con JS */
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .main-nav {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav ul li {
+        margin: 0 0 10px 0;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .search-input {
+        width: calc(100% - 60px);
+        margin-right: 15px;
+    }
+
+    .search-input:focus {
+        width: calc(100% - 60px);
+    }
+
+    .hero-section {
+        padding: 80px 0;
+    }
+
+    .hero-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
         display: flex;
-    }
-
-    .nav-toggle {
-        display: block; /* Muestra el botón hamburguesa */
-        position: absolute;
-        right: 20px;
-        top: 20px;
-    }
-
-    .hero-card {
-        flex-direction: column; /* Apila la imagen y la info */
-        text-align: center;
-    }
-
-    .hero-image,
-    .hero-info {
-        width: 100%;
-        height: auto;
-    }
-
-    .hero-info {
-        padding: 25px;
-    }
-
-    .hero-info h2 {
-        text-align: center;
-        font-size: 1.8rem;
-    }
-
-    .hero-info p {
-        font-size: 0.95rem;
-    }
-
-    .hero-player-controls {
-        justify-content: center; /* Centra los controles en móvil */
-    }
-
-    .album-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Más compacto */
+        flex-direction: column;
         gap: 20px;
     }
 
-    .album-card img {
-        height: 150px;
+    .hero-buttons .btn {
+        margin: 0;
     }
 
-    .artist-card {
-        width: 150px;
+    section {
+        padding: 60px 0;
     }
 
-    .artist-card img {
-        height: 150px;
+    section h3 {
+        font-size: 2rem;
+        margin-bottom: 40px;
     }
 
-    .fixed-player {
-        height: 70px;
-        padding: 0 15px;
-    }
-
-    .fixed-player .player-controls {
-        gap: 10px;
-        flex-wrap: wrap; /* Permite que los controles salten de línea si es necesario */
-        justify-content: center;
-    }
-
-    .fixed-player .player-btn {
-        font-size: 1.2rem;
-    }
-
-    .fixed-player .play-pause-btn {
-        font-size: 1.5rem;
-    }
-
-    .fixed-player .song-info {
-        width: 100%; /* Ocupa todo el ancho disponible */
-        text-align: center;
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-    }
-
-    .fixed-player .progress-bar-container {
-        order: -1; /* Mueve la barra de progreso arriba en el flexbox */
-        width: 80%; /* Más ancha para mejor interacción */
-        margin-bottom: 5px;
-    }
-
-    .fixed-player .volume-btn {
-        display: none; /* Oculta el control de volumen en pantallas muy pequeñas */
+    .genres-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 
     .footer-content {
-        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
-    .footer-nav ul {
-        flex-direction: column;
-        gap: 10px;
+    .footer-section {
+        margin-bottom: 40px;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .footer-section h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-section ul {
+        padding: 0;
     }
 }
 
 @media (max-width: 480px) {
-    .fixed-player .progress-bar-container {
-        width: 90%; /* Aún más ancha en pantallas muy pequeñas */
+    .main-header {
+        padding: 10px 0;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .search-input {
+        width: calc(100% - 50px);
+    }
+
+    .search-input:focus {
+        width: calc(100% - 50px);
+    }
+
+    .icon-button {
+        font-size: 1.3rem;
+        margin-left: 10px;
+    }
+
+    .hero-section {
+        padding: 60px 0;
+        min-height: 50vh;
+    }
+
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .hero-buttons .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 40px 0;
+    }
+
+    section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card img {
+        height: 200px;
+    }
+
+    .card h4 {
+        font-size: 1.2rem;
+    }
+
+    .play-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .genres-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+    }
+
+    .release-item img {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+    }
+
+    .release-info h4 {
+        font-size: 1rem;
+    }
+
+    .release-info p, .release-date {
+        font-size: 0.8rem;
+    }
+
+    .play-button.small {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+    }
+
+    .social-icons a {
+        font-size: 1.2rem;
+        margin-right: 10px;
     }
 }
