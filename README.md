@@ -61,3 +61,18 @@ ejemplo con song :
 COPY song (cacion_id , titulo , artista , genero ) FROM '/home/daniel/DBII_Prueba/csv/song.csv' WITH HEADER = true ;
 COPY users (user_id , ciudad , nombre ) FROM '/home/daniel/DBII_Prueba/csv/users.csv' WITH HEADER = true ;
 ```
+## Habilitar Busqueda
+
+```bash
+cqlsh
+```
+usar la Keyspace antes creada
+
+```bash
+USE app_music ;
+```
+
+Comando para habilitar la busqueda por titulo de las canciones
+```bash
+CREATE CUSTOM INDEX IF NOT EXISTS song_titulo_sasi ON song (titulo) USING 'org.apache.cassandra.index.sasi.SASIIndex' WITH OPTIONS = {'mode': 'CONTAINS', 'analyzer_class': 'org.apache.cassandra.index.sasi.analyzer.StandardAnalyzer', 'case_sensitive': 'false'};
+```
