@@ -9,3 +9,83 @@ cacion_id,artista,genero,titulo
 5a6b7c8d-9e0f-1a2b-3c4d-5e6f7a8b9c0d,Billie Eilish,Electropop,Bad Guy
 9e0f1a2b-3c4d-5e6f-7a8b-9c0d1e2f3a4b,Marc Anthony,Salsa,Vivir Mi Vida
 0f1e2d3c-4b5a-6f7e-8d9c-0b1a2f3e4d5c,Juanes,Rock,La Camisa Negra
+d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a,Coldplay,Alternative,Fix You
+a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d,Adele,Pop,Hello
+b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e,AC/DC,Rock,Back In Black
+c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f,Taylor Swift,Pop,Blank Space
+d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a,Drake,Hip-Hop,God's Plan
+e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b,Shakira,Latin,Hips Don't Lie
+f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b1c,BTS,K-Pop,Dynamite
+a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2d,Dua Lipa,Pop,Levitating
+b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3e,Eminem,Hip-Hop,Lose Yourself
+c9d0e1f2-a3b4-5c6d-7e8f-9a0b1c2d3e4f,Sia,Pop,Chandelier
+d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5a,Imagine Dragons,Alternative,Radioactive
+e1f2a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6b,Red Hot Chili Peppers,Rock,Californication
+f2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7c,The Beatles,Rock,Hey Jude
+a3b4c5d6-e7f8-9a0b-1c2d-3e4f5a6b7c8d,The Rolling Stones,Rock,Paint It Black
+b4c5d6e7-f8a9-0b1c-2d3e-4f5a6b7c8d9e,Elton John,Pop,Rocket Man
+c5d6e7f8-a9b0-1c2d-3e4f-5a6b7c8d9e0f,Wham!,Pop,Wake Me Up Before You Go-Go
+d6e7f8a9-b0c1-2d3e-4f5a-6b7c8d9e0f1a,The Police,Rock,Every Breath You Take
+e7f8a9b0-c1d2-3e4f-5a6b-7c8d9e0f1a2b,Michael Jackson,Pop,Billie Jean
+f8a9b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b3c,Bon Jovi,Rock,Living on a Prayer
+a9b0c1d2-e3f4-5a6b-7c8d-9e0f1a2b3c4d,Linkin Park,Rock,In the End
+b0c1d2e3-f4a5-6b7c-8d9e-0f1a2b3c4d5e,Queen,Rock,Don't Stop Me Now
+c1d2e3f4-a5b6-7c8d-9e0f-1a2b3c4d5e6f,The Killers,Alternative,Mr. Brightside
+d2e3f4a5-b6c7-8d9e-0f1a-2b3c4d5e6f7a,Avicii,Electro,Wake Me Up
+e3f4a5b6-c7d8-9e0f-1a2b-3c4d5e6f7a8b,David Guetta,Dance,Titanium
+f4a5b6c7-d8e9-0f1a-2b3c-4d5e6f7a8b9c,Shawn Mendes,Pop,Stitches
+a5b6c7d8-e9f0-1a2b-3c4d-5e6f7a8b9c0d,Justin Bieber,Pop,Sorry
+b6c7d8e9-f0a1-2b3c-4d5e-6f7a8b9c0d1e,Bruno Mars,Pop,Just the Way You Are
+c7d8e9f0-a1b2-3c4d-5e6f-7a8b9c0d1e2f,The Chainsmokers,Electro,Closer
+d8e9f0a1-b2c3-4d5e-6f7a-8b9c0d1e2f3a,Maroon 5,Pop,Memories
+e9f0a1b2-c3d4-5e6f-7a8b-9c0d1e2f3a4b,Bill Withers,Soul,Ain't No Sunshine
+f0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c,Daft Punk,Electro,Get Lucky
+a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e,Katy Perry,Pop,Firework
+b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7f,Harry Styles,Pop,As It Was
+c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8g,Ed Sheeran,Pop,Perfect
+d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9h,The Eagles,Rock,Hotel California
+e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0i,Lady Gaga,Pop,Bad Romance
+f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b1j,The Weeknd,R&B,Save Your Tears
+a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2k,OneRepublic,Pop,Counting Stars
+b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3l,Selena Gomez,Pop,Love You Like a Love Song
+c9d0e1f2-a3b4-5c6d-7e8f-9a0b1c2d3e4m,Miley Cyrus,Pop,Flowers
+d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5n,The Lumineers,Folk,Ho Hey
+e1f2a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6o,Sam Smith,Pop,Stay With Me
+f2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7p,Metallica,Rock,Enter Sandman
+a3b4c5d6-e7f8-9a0b-1c2d-3e4f5a6b7c8q,The Strokes,Rock,Last Nite
+b4c5d6e7-f8a9-0b1c-2d3e-4f5a6b7c8d9r,Green Day,Punk,American Idiot
+c5d6e7f8-a9b0-1c2d-3e4f-5a6b7c8d9e0s,Toto,Rock,Africa
+d6e7f8a9-b0c1-2d3e-4f5a-6b7c8d9e0f1t,Queen,Rock,Another One Bites The Dust
+e7f8a9b0-c1d2-3e4f-5a6b-7c8d9e0f1a2u,The Script,Pop,Hall of Fame
+f8a9b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b3v,Shawn Mendes,Pop,There's Nothing Holdin' Me Back
+a9b0c1d2-e3f4-5a6b-7c8d-9e0f1a2b3c4w,Backstreet Boys,Pop,I Want It That Way
+b0c1d2e3-f4a5-6b7c-8d9e-0f1a2b3c4d5x,The Cranberries,Rock,Zombie
+c1d2e3f4-a5b6-7c8d-9e0f-1a2b3c4d5e6y,ABBA,Pop,Dancing Queen
+d2e3f4a5-b6c7-8d9e-0f1a-2b3c4d5e6f7z,Aerosmith,Rock,Dream On
+e3f4a5b6-c7d8-9e0f-1a2b-3c4d5e6f7a8A,Louis Armstrong,Jazz,What a Wonderful World
+f4a5b6c7-d8e9-0f1a-2b3c-4d5e6f7a8b9B,Queen,Rock,We Will Rock You
+a5b6c7d8-e9f0-1a2b-3c4d-5e6f7a8b9c0C,Journey,Rock,Don't Stop Believin'
+b6c7d8e9-f0a1-2b3c-4d5e-6f7a8b9c0d1D,Queen,Rock,We Are The Champions
+c7d8e9f0-a1b2-3c4d-5e6f-7a8b9c0d1e2E,The Verve,Rock,Bitter Sweet Symphony
+d8e9f0a1-b2c3-4d5e-6f7a-8b9c0d1e2f3F,OutKast,Hip-Hop,Hey Ya!
+e9f0a1b2-c3d4-5e6f-7a8b-9c0d1e2f3a4G,Van Halen,Rock,Jump
+f0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5H,The Who,Rock,Baba O'Riley
+a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6I,Electric Light Orchestra,Rock,Mr. Blue Sky
+b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7J,Radiohead,Alternative,Creep
+c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8K,Bonnie Tyler,Rock,Total Eclipse of the Heart
+d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9L,Survivor,Rock,Eye of the Tiger
+e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0M,No Doubt,Pop,Don't Speak
+f6a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b1N,Lizzo,Pop,About Damn Time
+a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2O,Queen,Rock,Somebody To Love
+b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3P,Post Malone,Hip-Hop,Circles
+c9d0e1f2-a3b4-5c6d-7e8f-9a0b1c2d3e4Q,Luis Miguel,Latin,La Incondicional
+d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5R,Juan Gabriel,Latin,Querida
+e1f2a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6S,Gloria Gaynor,Disco,I Will Survive
+f2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7T,Kings of Leon,Rock,Sex on Fire
+a3b4c5d6-e7f8-9a0b-1c2d-3e4f5a6b7c8U,Queen,Rock,I Want To Break Free
+b4c5d6e7-f8a9-0b1c-2d3e-4f5a6b7c8d9V,John Legend,Soul,All of Me
+c5d6e7f8-a9b0-1c2d-3e4f-5a6b7c8d9e0W,The Backstreet Boys,Pop,Everybody (Backstreet's Back)
+d6e7f8a9-b0c1-2d3e-4f5a-6b7c8d9e0f1X,Queen,Rock,Under Pressure
+e7f8a9b0-c1d2-3e4f-5a6b-7c8d9e0f1a2Y,Queen,Rock,Radio Ga Ga
+f8a9b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b3Z,The Doors,Rock,Light My Fire
+a9b0c1d2-e3f4-5a6b-7c8d-9e0f1a2b3c4AA,Dire Straits,Rock,Sultans of Swing
