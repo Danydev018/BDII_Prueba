@@ -15,15 +15,7 @@ Debian 12 :
   git clone https://github.com/cockr04ch/BDII_Prueba 
   cd BDII_Prueba
 ```
-## crear la DB con su respectiva keyspace
-El script que les deje creara automaticamente la keyspace y las tablas : 
-*OJO , ya Cassandra debe estar corriendo(activo)
-```bash
-python database.py
-```
-
 Una vez dentro de la carpeta, crear el entorno virtual de python.
-## Linux
 ```bash
   python3 -m venv venv
 ```
@@ -35,10 +27,17 @@ Bajar Dependencias del proyecto!
 ```bash
   pip install -r requirements.txt 
 ```
+
+## crear la DB con su respectiva keyspace
+El script que les deje creara automaticamente la keyspace y las tablas : 
+*OJO , ya Cassandra debe estar corriendo(activo)
+```bash
+python database.py
+```
 Una vez descargadas las dependencias, lanzar el proyecto : 
 ```bash
    python app/app.py
- ```
+```
 
  ## Importar Datos a la DB mediante los CSV
  
@@ -58,8 +57,8 @@ Comando para insertar datos, dentro de las comillas poner la ruta en la que se e
 ejemplo con song : 
 
 ```bash
-COPY song (cacion_id , titulo , artista , genero ) FROM '/home/daniel/DBII_Prueba/csv/song.csv' WITH HEADER = true ;
-COPY users (user_id , ciudad , nombre ) FROM '/home/daniel/DBII_Prueba/csv/users.csv' WITH HEADER = true ;
+COPY song (cacion_id , artista , genero , titulo ) FROM '<Ubicacion de los archivos .csv>' WITH HEADER = true ;
+COPY users (usuario_id , ciudad , nombre ) FROM 'Ubicacion de los archivos' WITH HEADER = true ;
 ```
 ## Habilitar Busqueda
 
