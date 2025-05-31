@@ -64,6 +64,20 @@ def create_cassandra_schema_no_auth(
         session.execute(create_listen_song_by_user_table_query)
         print(f"Tabla '{keyspace_name}.listen_song_by_user' Creada (o ya existe).")
 
+
+        #crea tabla Escuhas por genero y mes
+        create_listen_genero_mes = f"""
+        CREATE TABLE IF NOT EXISTS {keyspace_name}.escuchas_por_genero_y_mes (
+    genero text,
+    anio int,
+    mes int,
+    total_escuchas counter,
+    PRIMARY KEY ((genero, anio, mes))
+    );
+        """
+        session.execute(create_listen_genero_mes)
+        print(f"tabla genero_mes creada correcta")
+
         print("Esquema de Cassandra creado exitosamente.")
 
     except Exception as e:
