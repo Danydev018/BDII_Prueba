@@ -16,7 +16,7 @@ __pycache__/
 # Archivos de datos sensibles o temporales (si aplica)
 *.log
 *.sqlite3
-.env 
+#.env 
 
 # Archivos de instalación de dependencias (generalmente no se versionan)
 pip-wheel-metadata/

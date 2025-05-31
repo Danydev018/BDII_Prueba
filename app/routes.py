@@ -4,6 +4,12 @@ from db import get_cassandra_cluster_and_session # Importa la configuracion de c
 
 main_bp = Blueprint('main', __name__)
 
+# Helper to convert month number to name (can be moved to a utility file if preferred)
+month_names = {
+    1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio',
+    7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Noviembre', 11: 'Diciembre'
+}
+
 # Ruta Principal
 @main_bp.route("/")
 def home():
@@ -60,3 +66,33 @@ def search_songs():
         import traceback
         traceback.print_exc()
         return f"<p>Error al realizar la búsqueda: {e}</p>"
+
+# Nueva Ruta para Detalle de Género
+@main_bp.route('/genre/<genre_name>')
+def genre_detail(genre_name):
+    session, cluster = get_cassandra_cluster_and_session()
+    monthly_listens = []
+
+    try:
+        if session:
+            query = "SELECT anio, mes, total_escuchas FROM escuchas_por_genero_y_mes WHERE genero = %s ALLOW FILTERING"
+            rows = session.execute(query, (genre_name,))
+
+            for row in rows:
+                monthly_listens.append({
+                    'anio': row.anio,
+                    'mes': row.mes,
+                    'mes_nombre': month_names.get(row.mes, 'Desconocido'),
+                    'total_escuchas': row.total_escuchas
+                })
+
+            # Sort by year and then month for better presentation
+            monthly_listens.sort(key=lambda x: (x['anio'], x['mes']))
+
+            return render_template('genre_detail.html', genre_name=genre_name, monthly_listens=monthly_listens)
+        else:
+            return "<p>Error: No se pudo conectar a la base de datos de Cassandra.</p>"
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return f"<p>Error al obtener detalles del género: {e}</p>"
