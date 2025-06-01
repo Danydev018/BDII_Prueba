@@ -237,9 +237,34 @@ def recomendaciones():
         elif filtro == "genero":
             canciones.sort(key=lambda x: x['genero'])
         elif filtro == "artista":
-            canciones.sort(key=lambda x: x['artista'])
-        elif filtro == "titulo":
-            canciones.sort(key=lambda x: x['titulo'])
+            # Obtener los últimos 3 artistas escuchados
+            canciones_ordenadas = sorted(canciones, key=lambda x: x['fecha_escucha'], reverse=True)
+            artistas_recientes = []
+            for c in canciones_ordenadas:
+                if c['artista'] and c['artista'] not in artistas_recientes:
+                    artistas_recientes.append(c['artista'])
+                if len(artistas_recientes) == 3:
+                    break
+
+            # Última canción escuchada de cada artista
+            canciones_filtradas = []
+            canciones_extra = []
+            canciones_por_artista = {artista: [] for artista in artistas_recientes}
+            for c in canciones_ordenadas:
+                if c['artista'] in artistas_recientes:
+                    canciones_por_artista[c['artista']].append(c)
+
+            # Agrega la última canción escuchada de cada artista
+            for artista in artistas_recientes:
+                if canciones_por_artista[artista]:
+                    canciones_filtradas.append(canciones_por_artista[artista][0])
+
+            # Agrega hasta dos canciones adicionales por artista (sin repetir la última ya agregada)
+            for artista in artistas_recientes:
+                adicionales = canciones_por_artista[artista][1:3]  # máximo dos más
+                canciones_extra.extend(adicionales)
+
+            canciones = canciones_filtradas + canciones_extra
         elif filtro == "recientes":
             canciones.sort(key=lambda x: x['anio'] if x['anio'] else 0, reverse=True)
         elif filtro == "antiguas":
