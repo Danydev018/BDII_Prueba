@@ -70,14 +70,26 @@ def create_cassandra_schema_no_auth(
         #crea tabla Escuhas por genero y mes
         create_listen_genero_mes = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.escuchas_por_genero_y_mes (
-    genero text,
-    anio int,
-    mes int,
-    total_escuchas counter,
-    PRIMARY KEY ((genero, anio, mes))
-    );
+        genero text,
+        anio int,
+        mes int,
+        total_escuchas counter,
+        PRIMARY KEY ((genero, anio, mes))
+        );
+            """
+            
+        #CANCIONES ESCUCHADAS POR MES
+        create_canciones_escuchadas_por_mes = f"""
+        CREATE TABLE IF NOT EXISTS {keyspace_name}.canciones_escuchadas_por_mes (
+        id_cancion UUID,
+        anho int,
+        mes int,
+        total_escuchadas int,
+        PRIMARY KEY ((id_cancion, anho, mes))
+        );
         """
-        session.execute(create_listen_genero_mes)
+        
+        session.execute(create_canciones_escuchadas_por_mes)
         print(f"tabla genero_mes creada correcta")
 
         print("Esquema de Cassandra creado exitosamente.")
