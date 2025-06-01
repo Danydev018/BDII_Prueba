@@ -48,7 +48,6 @@
                             <option value="escuchas">Escuchas</option>
                             <option value="ciudad">Ciudad</option>
                             <option value="artista">Artista</option>
-                            <option value="titulo">Título de Canción</option>
                             <option value="mas_escuchadas">Más Escuchadas</option>
                             <option value="menos_escuchadas">Menos Escuchadas</option>
                             <option value="recientes">Más Recientes</option>
@@ -74,11 +73,12 @@
                     <div class="featured-grid">
                         {% for rec in recomendaciones %}
                             <div class="card">
-                                <h4>{{ rec.titulo }}</h4>
-                                <p>{{ rec.artista }}</p>
-                                <p><strong>Género:</strong> {{ rec.genero }}</p>
-                                <button class="play-button"><i class="fas fa-play"></i></button>
-                            </div>
+                            <h4>{{ rec.titulo }}</h4>
+                            <p>{{ rec.artista }}</p>
+                            <p><strong>Género:</strong> {{ rec.genero }}</p>
+                            <p><strong>Año:</strong> {{ rec.anio }}</p>
+                            <button class="play-button"><i class="fas fa-play"></i></button>
+                        </div>
                         {% endfor %}
                     </div>
                 {% elif usuario %}

@@ -33,8 +33,8 @@ def create_cassandra_schema_no_auth(
         create_users_table_query = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.users (
             usuario_id UUID PRIMARY KEY,
-            ciudad TEXT,
             nombre TEXT,
+            ciudad TEXT,
         );
         """
         session.execute(create_users_table_query)
@@ -47,7 +47,9 @@ def create_cassandra_schema_no_auth(
         artista TEXT,
         genero TEXT,
         titulo TEXT,
+        anho int,
         );
+        
         """
         session.execute(create_song_table_query)
         print(f"Tabla '{keyspace_name}.song' creada (o ya existe).")
