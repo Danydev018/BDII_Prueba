@@ -58,8 +58,8 @@ def create_cassandra_schema_no_auth(
         create_listen_song_by_user_table_query = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.listen_song_by_user (
             usuario_id UUID,
-            fecha_escucha timestamp,
             cacion_id UUID,
+            fecha_escucha timestamp,
             PRIMARY KEY ((usuario_id), fecha_escucha, cacion_id)
         ) WITH CLUSTERING ORDER BY (fecha_escucha DESC);
         """
@@ -76,8 +76,10 @@ def create_cassandra_schema_no_auth(
         total_escuchas counter,
         PRIMARY KEY ((genero, anio, mes))
         );
-            """
-            
+        """
+        session.execute(create_listen_genero_mes)
+        print(f"tabla genero_mes creada correcta")
+        
         #CANCIONES ESCUCHADAS POR MES
         create_canciones_escuchadas_por_mes = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.canciones_escuchadas_por_mes (
