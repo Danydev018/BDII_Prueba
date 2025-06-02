@@ -94,13 +94,14 @@ def create_cassandra_schema_no_auth(
         # NUEVA TABLA: recomendaciones (para OLAP y recomendaciones)
         create_recommendations_table_query = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.recomendaciones(
-            genero TEXT,
-            cancion_id UUID,
-            titulo TEXT,
-            artista TEXT,
-            total_escuchas COUNTER,
-            PRIMARY KEY ((genero), total_escuchas DESC, cancion_id)
-        );
+        genero TEXT,
+        cancion_id UUID,
+        titulo TEXT,
+        anio int,
+        artista TEXT,
+        total_escuchas int,
+        PRIMARY KEY ((cancion_id,anio,genero,artista))
+    );
         """
         session.execute(create_recommendations_table_query)
         print(f"Tabla '{keyspace_name}.recomendaciones' creada correctamente.")
