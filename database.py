@@ -67,7 +67,7 @@ def create_cassandra_schema_no_auth(
         print(f"Tabla '{keyspace_name}.listen_song_by_user' Creada (o ya existe).")
 
 
-        #crea tabla Escuhas por genero y mes
+        #crea tabla Escuhas por genero y mes [OLAP]
         create_listen_genero_mes = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.escuchas_por_genero_y_mes (
         genero text,
@@ -80,7 +80,7 @@ def create_cassandra_schema_no_auth(
         session.execute(create_listen_genero_mes)
         print(f"tabla genero_mes creada correcta")
         
-        #CANCIONES ESCUCHADAS POR MES
+        #CANCIONES ESCUCHADAS POR MES [OLAP]
         create_canciones_escuchadas_por_mes = f"""
         CREATE TABLE IF NOT EXISTS {keyspace_name}.canciones_escuchadas_por_mes (
         id_cancion UUID,
@@ -90,6 +90,21 @@ def create_cassandra_schema_no_auth(
         PRIMARY KEY ((id_cancion, anho, mes))
         );
         """
+
+        # NUEVA TABLA: recomendaciones (para OLAP y recomendaciones)
+        create_recommendations_table_query = f"""
+        CREATE TABLE IF NOT EXISTS {keyspace_name}.recomendaciones(
+            genero TEXT,
+            cancion_id UUID,
+            titulo TEXT,
+            artista TEXT,
+            total_escuchas COUNTER,
+            PRIMARY KEY ((genero), total_escuchas DESC, cancion_id)
+        );
+        """
+        session.execute(create_recommendations_table_query)
+        print(f"Tabla '{keyspace_name}.recomendaciones' creada correctamente.")
+
         
         session.execute(create_canciones_escuchadas_por_mes)
         print(f"tabla genero_mes creada correcta")
