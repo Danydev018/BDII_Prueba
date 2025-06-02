@@ -5,9 +5,10 @@ from db import get_cassandra_cluster_and_session # Importa la configuracion de c
 main_bp = Blueprint('main', __name__)
 
 # Helper to convert month number to name (can be moved to a utility file if preferred)
+# Corrected month_names dictionary
 month_names = {
     1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio',
-    7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Noviembre', 11: 'Diciembre'
+    7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'
 }
 
 # Ruta Principal
@@ -72,31 +73,59 @@ def search_songs():
 def genre_detail(genre_name):
     session, cluster = get_cassandra_cluster_and_session()
     monthly_listens = []
+    top_songs = []
 
     try:
         if session:
-            query = "SELECT anio, mes, total_escuchas FROM escuchas_por_genero_y_mes WHERE genero = %s ALLOW FILTERING"
-            rows = session.execute(query, (genre_name,))
+            # 1. Get monthly listens for the genre (existing logic)
+            query_monthly_listens = "SELECT anio, mes, total_escuchas FROM escuchas_por_genero_y_mes WHERE genero = %s ALLOW FILTERING"
+            rows_monthly = session.execute(query_monthly_listens, (genre_name,))
 
-            for row in rows:
+            for row in rows_monthly:
                 monthly_listens.append({
                     'anio': row.anio,
                     'mes': row.mes,
-                    'mes_nombre': month_names.get(row.mes, 'Desconocido'),
+                    'mes_nombre': month_names.get(row.mes, 'Desconocido'), # Use corrected month_names
                     'total_escuchas': row.total_escuchas
                 })
-
-            # Sort by year and then month for better presentation
             monthly_listens.sort(key=lambda x: (x['anio'], x['mes']))
 
-            return render_template('genre_detail.html', genre_name=genre_name, monthly_listens=monthly_listens)
+            # 2. Get Top 5 songs for the genre
+            # 2a. Find all songs in the given genre
+            query_songs_in_genre = "SELECT cacion_id, titulo, artista FROM song WHERE genero = %s ALLOW FILTERING"
+            songs_in_genre = session.execute(query_songs_in_genre, (genre_name,))
+            
+            song_listen_counts = []
+
+            for song_row in songs_in_genre:
+                total_listens_for_song = 0
+                # 2b. For each song, sum its listens from canciones_escuchadas_por_mes
+                query_song_listens = "SELECT total_escuchadas FROM canciones_escuchadas_por_mes WHERE id_cancion = %s ALLOW FILTERING"
+                listen_records = session.execute(query_song_listens, (song_row.cacion_id,))
+                
+                for listen_record in listen_records:
+                    total_listens_for_song += listen_record.total_escuchadas
+                
+                if total_listens_for_song > 0:
+                    song_listen_counts.append({
+                        'nombre_cancion': song_row.titulo,
+                        'artista': song_row.artista,
+                        'total_escuchas': total_listens_for_song
+                    })
+            
+            # 2c. Sort songs by total listens and get the top 5
+            top_songs = sorted(song_listen_counts, key=lambda x: x['total_escuchas'], reverse=True)[:5]
+
+            return render_template('genre_detail.html', 
+                                   genre_name=genre_name, 
+                                   monthly_listens=monthly_listens,
+                                   top_songs=top_songs)
         else:
             return "<p>Error: No se pudo conectar a la base de datos de Cassandra.</p>"
     except Exception as e:
         import traceback
         traceback.print_exc()
         return f"<p>Error al obtener detalles del género: {e}</p>"
-
 
 
 @main_bp.route("/recomendaciones")
@@ -265,14 +294,14 @@ def recomendaciones():
                 canciones_extra.extend(adicionales)
 
             canciones = canciones_filtradas + canciones_extra
-        elif filtro == "recientes":
+        elif filtro == "recientes": # This seems to be a duplicate of anio sorting, assuming "recientes" by anio
             canciones.sort(key=lambda x: x['anio'] if x['anio'] else 0, reverse=True)
-        elif filtro == "antiguas":
+        elif filtro == "antiguas": # This seems to be a duplicate of anio sorting, assuming "antiguas" by anio
             canciones.sort(key=lambda x: x['anio'] if x['anio'] else 0)
         elif filtro == "mes":
             canciones.sort(key=lambda x: x['fecha_escucha'].month if x['fecha_escucha'] else 0)
-        elif filtro == "ciudad":
-            canciones.sort(key=lambda x: x['ciudad'] if x['ciudad'] else "")
+        # elif filtro == "ciudad": # This was handled by special logic block above
+        #     canciones.sort(key=lambda x: x['ciudad'] if x['ciudad'] else "")
         elif filtro == "escuchas":
             canciones.sort(key=lambda x: x['escuchas'], reverse=True)
         elif filtro == "mas_escuchadas":

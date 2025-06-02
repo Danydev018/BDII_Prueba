@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../static/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="main-header">
@@ -35,16 +36,50 @@
             <div class="container">
                 <h2>Escuchas de {{ genre_name }} por Mes</h2>
                 {% if monthly_listens %}
-                    <div class="monthly-listens-grid">
-                        {% for listen in monthly_listens %}
-                            <div class="month-card">
-                                <h3>{{ listen.mes_nombre }} {{ listen.anio }}</h3>
-                                <p>Total de Escuchas: <strong>{{ listen.total_escuchas }}</strong></p>
-                            </div>
-                        {% endfor %}
+                    <div class="chart-container" style="position: relative; height:40vh; width:80vw; margin: 20px auto;">
+                        <canvas id="monthlyListensChart"></canvas>
+                    </div>
+
+                    <h3>Datos en Tabla</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Año</th>
+                                    <th>Mes</th>
+                                    <th>Total de Escuchas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for listen in monthly_listens %}
+                                <tr>
+                                    <td>{{ listen.anio }}</td>
+                                    <td>{{ listen.mes_nombre }}</td>
+                                    <td>{{ listen.total_escuchas }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 {% else %}
                     <p>No hay datos de escuchas disponibles para este género.</p>
+                {% endif %}
+
+                <h3 class="top-songs-title">Top 5 Canciones Más Escuchadas de {{ genre_name }}</h3>
+                {% if top_songs %}
+                    <div class="top-songs-list-container">
+                        <ol class="top-songs-list">
+                            {% for song in top_songs %}
+                                <li class="song-item">
+                                    <span class="song-title">{{ song.nombre_cancion }}</span>
+                                    <span class="song-artist"> - {{ song.artista }}</span>
+                                    <span class="song-listens">({{ song.total_escuchas }} escuchas)</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                {% else %}
+                    <p class="no-data-message">No hay datos de canciones más escuchadas disponibles para este género.</p>
                 {% endif %}
                 <a href="/#genres" class="btn primary-btn back-button">Volver a Géneros</a>
             </div>
@@ -81,5 +116,352 @@
             </div>
         </div>
     </footer>
+
+    <style>
+        /* Estilos para la sección de detalle del género */
+        .genre-detail-section {
+            padding: 60px 0;
+            background-color: var(--dark-bg); /* Usa el color de fondo oscuro de tu tema */
+            color: var(--text-color); /* Color de texto principal */
+        }
+
+        .genre-detail-section h2,
+        .genre-detail-section h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color); /* Un color de acento para los títulos */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%; /* Asegura que el h3 ocupe el ancho completo para centrar su after */
+        }
+
+        /* Estilo para el título de la tabla */
+        .genre-detail-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px; /* Un poco más ancho para el título de la tabla */
+            height: 3px;
+            background: var(--accent-color); /* Color de acento para la línea */
+            border-radius: 2px;
+        }
+
+        /* Contenedor de la tabla */
+        .table-container {
+            margin-top: 40px;
+            overflow-x: auto;
+            background-color: var(--card-bg); /* Fondo de tarjeta para la tabla */
+            border-radius: 12px; /* Bordes redondeados */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+            padding: 25px; /* Más padding para espacio */
+            max-width: 800px; /* Limita el ancho de la tabla */
+            margin-left: auto; /* Centra la tabla */
+            margin-right: auto; /* Centra la tabla */
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0; /* Elimina margen inferior extra */
+            color: var(--light-text); /* Color de texto secundario para el contenido de la tabla */
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px; /* Más padding para una mejor legibilidad */
+            text-align: left;
+            border-bottom: 1px solid var(--border-color); /* Borde sutil del tema oscuro */
+            font-family: var(--font-body); /* Usa la fuente del cuerpo */
+        }
+
+        .data-table th {
+            background-color: var(--light-bg); /* Fondo ligeramente más claro para el encabezado */
+            font-weight: 600; /* Un poco más de peso para el encabezado */
+            color: var(--primary-color); /* Color de acento para los encabezados */
+            text-transform: uppercase; /* Mayúsculas para los encabezados */
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Estilo para filas pares/impares para mejor legibilidad */
+        .data-table tbody tr:nth-child(even) {
+            background-color: var(--dark-bg); /* Un tono más oscuro */
+        }
+
+        .data-table tbody tr:nth-child(odd) {
+            background-color: var(--card-bg); /* Un tono ligeramente más claro para impares */
+        }
+
+        /* Efecto al pasar el mouse por encima de las filas */
+        .data-table tbody tr:hover {
+            background-color: rgba(var(--primary-color), 0.1); /* Un suave brillo con el color primario */
+            transform: scale(1.005); /* Ligerísimo escalado */
+            box-shadow: 0 0 15px rgba(var(--primary-color), 0.3); /* Sombra sutil con color primario */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Eliminar el último borde inferior de la tabla */
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* --- Estilos para la sección de Top 5 Canciones --- */
+        .top-songs-title {
+            margin-top: 60px; /* Espacio superior para separar de la tabla */
+            margin-bottom: 30px;
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .top-songs-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; /* Un poco más ancho para este título */
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .top-songs-list-container {
+            margin-top: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            padding: 30px; /* Más padding para la lista */
+            max-width: 700px; /* Ancho similar a la tabla */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .top-songs-list {
+            list-style: none; /* Eliminar viñetas por defecto */
+            padding: 0;
+            margin: 0;
+        }
+
+        .song-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-family: var(--font-body);
+            color: var(--text-color);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .song-item:last-child {
+            border-bottom: none; /* Eliminar borde del último item */
+        }
+
+        .song-item:hover {
+            background-color: rgba(var(--primary-color), 0.05); /* Suave fondo al pasar el mouse */
+            transform: translateX(5px); /* Pequeño desplazamiento */
+        }
+
+        .song-title {
+            font-weight: 600;
+            color: var(--primary-color); /* Color de acento para el título de la canción */
+            flex-grow: 1; /* Permite que el título ocupe espacio */
+            margin-right: 10px;
+        }
+
+        .song-artist {
+            color: var(--light-text); /* Color secundario para el artista */
+            font-style: italic;
+            margin-right: 10px;
+        }
+
+        .song-listens {
+            font-weight: 700;
+            color: var(--accent-color); /* Color llamativo para las escuchas */
+            white-space: nowrap; /* Evitar que se rompa la línea */
+        }
+
+        .no-data-message {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--light-text);
+            font-style: italic;
+        }
+
+        /* --- End Estilos para la sección de Top 5 Canciones --- */
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0 auto; /* Centra el botón y le da espacio */
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #fff;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments for the table and new section */
+        @media (max-width: 768px) {
+            .table-container, .top-songs-list-container {
+                padding: 15px;
+                max-width: 95%; /* Make it a bit wider on smaller screens */
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .genre-detail-section h2,
+            .genre-detail-section h3,
+            .top-songs-title {
+                font-size: 2rem;
+            }
+
+            .genre-detail-section h3::after,
+            .top-songs-title::after {
+                width: 60px;
+            }
+
+            .song-item {
+                flex-direction: column; /* Stack elements vertically */
+                align-items: flex-start;
+            }
+            .song-artist {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+            .song-listens {
+                margin-top: 5px;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .genre-detail-section h2,
+            .genre-detail-section h3,
+            .top-songs-title {
+                font-size: 1.8rem;
+            }
+
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .song-title, .song-artist, .song-listens {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const monthlyListens = {{ monthly_listens | tojson }};
+
+            if (monthlyListens && monthlyListens.length > 0) {
+                const labels = monthlyListens.map(item => `${item.mes_nombre} ${item.anio}`);
+                const data = monthlyListens.map(item => item.total_escuchas);
+                const ctx = document.getElementById('monthlyListensChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total de Escuchas',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Número de Escuchas',
+                                    color: '#FFFFFF' // White text for Y-axis title
+                                },
+                                ticks: {
+                                    color: '#FFFFFF' // White text for Y-axis ticks
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Mes y Año',
+                                    color: '#FFFFFF' // White text for X-axis title
+                                },
+                                ticks: {
+                                    color: '#FFFFFF' // White text for X-axis ticks
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Escuchas Mensuales para {{ genre_name }}',
+                                color: '#FFFFFF', // White text for chart title
+                                font: {
+                                    size: 20,
+                                    family: 'var(--font-heading)'
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    color: '#FFFFFF', // White text for legend labels
+                                    font: {
+                                        family: 'var(--font-body)'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
