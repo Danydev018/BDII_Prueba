@@ -40,12 +40,10 @@
                     <p>Ingresa el nombre de usuario para ver sus recomendaciones personalizadas.</p>
                     <form action="/recomendaciones" method="GET" class="search-form" style="margin-top: 30px; display: flex; gap: 10px; align-items: center; justify-content: center;">
                         <input type="text" name="usuario" placeholder="Nombre de usuario..." class="search-input" required>
-                        <select name="filtro" class="filter-select" style="border-radius: 20px; padding: 8px; font-weight: bold;">
+                        <select name="filtro" class="filter-select" id="filtro-select" style="border-radius: 20px; padding: 8px; font-weight: bold;">
                             <option value="">Filtrar por...</option>
                             <option value="anio">Año</option>
-                            <option value="mes">Mes</option>
                             <option value="genero">Género</option>
-                            <option value="escuchas">Escuchas</option>
                             <option value="ciudad">Ciudad</option>
                             <option value="artista">Artista</option>
                             <option value="mas_escuchadas">Más Escuchadas</option>
@@ -53,6 +51,46 @@
                             <option value="recientes">Más Recientes</option>
                             <option value="antiguas">Más Antiguas</option>
                         </select>
+                        <div id="anio-grid-container" style="display:none;">
+                            <div id="anio-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px;"></div>
+                            <div style="display: flex; justify-content: center; gap: 10px;">
+                                <button type="button" id="anio-prev-btn" style="display:none;">&larr; Anterior</button>
+                                <button type="button" id="anio-next-btn" style="display:block;">Siguiente &rarr;</button>
+                            </div>
+                        </div>
+
+                        <div id="genero-select-container" style="display:none;">
+                            <select id="genero-select" style="border-radius: 20px; padding: 8px; font-weight: bold;">
+                                <option value="">Selecciona un género...</option>
+                                <option value="R&B">R&B</option>
+                                <option value="Rock">Rock</option>
+                                <option value="Blues">Blues</option>
+                                <option value="Reggae">Reggae</option>
+                                <option value="Bachata">Bachata</option>
+                                <option value="Soul">Soul</option>
+                                <option value="Jazz">Jazz</option>
+                                <option value="Electronica">Electrónica</option>
+                                <option value="Hip Hop">Hip Hop</option>
+                                <option value="Gospel">Gospel</option>
+                                <option value="K-Pop">K-Pop</option>
+                                <option value="Trap">Trap</option>
+                                <option value="Metal">Metal</option>
+                                <option value="Country">Country</option>
+                                <option value="Salsa">Salsa</option>
+                                <option value="Pop">Pop</option>
+                                <option value="Techno">Techno</option>
+                                <option value="Balada">Balada</option>
+                                <option value="Punk">Punk</option>
+                                <option value="Ska">Ska</option>
+                                <option value="Indie">Indie</option>
+                                <option value="Flamenco">Flamenco</option>
+                                <option value="Folk">Folk</option>
+                                <option value="Clásica">Clásica</option>
+                                <option value="Reggaetón">Reggaetón</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="anio" id="anio-hidden">
+                        <input type="hidden" name="genero" id="genero-hidden">
                         <button type="submit" class="btn primary-btn" style="border-radius: 20px; padding: 8px; font-weight: bold;">Ver recomendaciones</button>
                     </form>
                     
@@ -120,5 +158,95 @@
             </div>
         </div>
     </footer>
+    <script>
+        const filtroSelect = document.getElementById('filtro-select');
+        const anioGridContainer = document.getElementById('anio-grid-container');
+        const anioGrid = document.getElementById('anio-grid');
+        const anioNextBtn = document.getElementById('anio-next-btn');
+        const anioPrevBtn = document.createElement('button');
+        const anioHidden = document.getElementById('anio-hidden');
+
+        // Nuevo: obtener el botón anterior del DOM
+        const anioPrevBtnDOM = document.getElementById('anio-prev-btn');
+
+        let allYears = [];
+        for (let y = 2025; y >= 1950; y--) allYears.push(y);
+
+        let currentPage = 0;
+        const yearsPerPage = 16;
+
+        function renderYearGrid(page) {
+            anioGrid.innerHTML = '';
+            let start = page * yearsPerPage;
+            let end = Math.min(start + yearsPerPage, allYears.length);
+            for (let i = start; i < end; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = allYears[i];
+                btn.style = "padding:10px; border-radius:8px; font-weight:bold; background:#f0f0f0; border:1px solid #ccc; cursor:pointer;";
+                btn.onclick = function() {
+                    Array.from(anioGrid.children).forEach(b => b.style.background = "#f0f0f0");
+                    btn.style.background = "#b3e5fc";
+                    anioHidden.value = allYears[i];
+                };
+                anioGrid.appendChild(btn);
+            }
+            // Mostrar/ocultar botones según la página
+            anioNextBtn.style.display = (end < allYears.length) ? 'block' : 'none';
+            anioPrevBtnDOM.style.display = (page > 0) ? 'block' : 'none';
+        }
+
+        filtroSelect.addEventListener('change', function() {
+            if (this.value === 'anio') {
+                anioGridContainer.style.display = 'block';
+                currentPage = 0;
+                renderYearGrid(currentPage);
+            } else {
+                anioGridContainer.style.display = 'none';
+                anioHidden.value = '';
+            }
+        });
+
+        anioNextBtn.addEventListener('click', function() {
+            currentPage++;
+            renderYearGrid(currentPage);
+        });
+
+        anioPrevBtnDOM.addEventListener('click', function() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderYearGrid(currentPage);
+            }
+        });
+
+
+
+        const generoSelectContainer = document.getElementById('genero-select-container');
+        const generoSelect = document.getElementById('genero-select');
+        const generoHidden = document.getElementById('genero-hidden');
+
+        filtroSelect.addEventListener('change', function() {
+            if (this.value === 'anio') {
+                anioGridContainer.style.display = 'block';
+                generoSelectContainer.style.display = 'none';
+                generoHidden.value = '';
+                currentPage = 0;
+                renderYearGrid(currentPage);
+            } else if (this.value === 'genero') {
+                generoSelectContainer.style.display = 'block';
+                anioGridContainer.style.display = 'none';
+                anioHidden.value = '';
+            } else {
+                anioGridContainer.style.display = 'none';
+                generoSelectContainer.style.display = 'none';
+                anioHidden.value = '';
+                generoHidden.value = '';
+            }
+        });
+
+        generoSelect.addEventListener('change', function() {
+            generoHidden.value = this.value;
+        });
+    </script>
 </body>
 </html>
