@@ -162,7 +162,141 @@ def recomendaciones():
         usuario_id = user_row.usuario_id
         print(f"usuario_id encontrado: {usuario_id}")
         
+        # Filtro para las 10 canciones más escuchadas globalmente
+        if filtro == "mas_escuchadas":
+            rows = session.execute(
+                "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones"
+            )
+            # Ordena por total_escuchas y limita a 10
+            canciones = sorted(rows, key=lambda r: r.total_escuchas if r.total_escuchas else 0, reverse=True)[:10]
+            recomendaciones = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio,
+                    'escuchas': row.total_escuchas
+                }
+                for row in canciones
+            ]
+            return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
         
+        
+        
+        # Filtro para las 10 canciones menos escuchadas globalmente
+        if filtro == "menos_escuchadas":
+            rows = session.execute(
+                "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones"
+            )
+            # Ordena por total_escuchas ascendente y limita a 10
+            canciones = sorted(rows, key=lambda r: r.total_escuchas if r.total_escuchas is not None else 0)[:10]
+            recomendaciones = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio,
+                    'escuchas': row.total_escuchas
+                }
+                for row in canciones
+            ]
+            return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
+        
+        
+        
+        # Filtro para las 10 canciones más recientes (por año)
+        if filtro == "recientes":
+            rows = session.execute(
+                "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones"
+            )
+            # Ordena por anio descendente y limita a 10
+            canciones = sorted(rows, key=lambda r: r.anio if r.anio else 0, reverse=True)[:10]
+            recomendaciones = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio,
+                    'escuchas': row.total_escuchas
+                }
+                for row in canciones
+            ]
+            return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
+        
+        
+        
+        # Filtro para las 10 canciones más antiguas (por año)
+        if filtro == "antiguas":
+            rows = session.execute(
+                "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones"
+            )
+            # Ordena por anio ascendente y limita a 10
+            canciones = sorted(rows, key=lambda r: r.anio if r.anio else 0)[:10]
+            recomendaciones = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio,
+                    'escuchas': row.total_escuchas
+                }
+                for row in canciones
+            ]
+            return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
+        
+        
+        
+        if filtro == "genero":
+            genero = request.args.get('genero', '').strip()
+            print(f"""El género seleccionado es: {genero}""")
+            if genero:
+                # Consulta la tabla recomendaciones por género
+                rows = session.execute(
+                    "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones WHERE genero = %s ALLOW FILTERING",
+                    (genero,)
+                )
+                # Ordena por total_escuchas y limita a 20
+                canciones = sorted(rows, key=lambda r: r.total_escuchas if r.total_escuchas else 0, reverse=True)[:20]
+                recomendaciones = [
+                    {
+                        'titulo': row.titulo,
+                        'artista': row.artista,
+                        'genero': row.genero,
+                        'anio': row.anio,
+                        'escuchas': row.total_escuchas
+                    }
+                    for row in canciones
+                ]
+                return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
+            
+            
+            
+        #Logica para el filtro de año
+        if filtro == "anio":
+            anio = request.args.get('anio', '').strip()
+            print(f"""El año seleccionado es: {anio}""")
+            if anio:
+                # Consulta la tabla recomendaciones por año
+                rows = session.execute(
+                    "SELECT cancion_id, anio, genero, artista, titulo, total_escuchas FROM recomendaciones WHERE anio = %s ALLOW FILTERING",
+                    (int(anio),)
+                )
+                # Ordena por total_escuchas y limita a 15
+                canciones = sorted(rows, key=lambda r: r.total_escuchas if r.total_escuchas else 0, reverse=True)[:15]
+                recomendaciones = [
+                    {
+                        'titulo': row.titulo,
+                        'artista': row.artista,
+                        'genero': row.genero,
+                        'anio': row.anio,
+                        'escuchas': row.total_escuchas
+                    }
+                    for row in canciones
+                ]
+                return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
+        
+            
+            
         # Lógica especial para el filtro "ciudad"
         if filtro == "ciudad":
             # 1b. Obtener la ciudad del usuario
@@ -213,13 +347,13 @@ def recomendaciones():
             recomendaciones = canciones
             return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
         
+        
         ## Continua logica inicial si no se requiere el filtro por ciudad
 
         # 2a. Obtener escuchas del usuario
         listen_rows = session.execute(
             "SELECT cacion_id, fecha_escucha FROM listen_song_by_user WHERE usuario_id = %s", (usuario_id,)
         )
-
         # 3a. Obtener detalles de canciones escuchadas
         canciones_dict = {}
         for row in listen_rows:
@@ -259,13 +393,7 @@ def recomendaciones():
         canciones = list(canciones_dict.values())
 
         # 4a. Aplicar filtro
-        if filtro == "recientes":
-            canciones.sort(key=lambda x: x['fecha_escucha'], reverse=True)
-        elif filtro == "antiguas":
-            canciones.sort(key=lambda x: x['fecha_escucha'])
-        elif filtro == "genero":
-            canciones.sort(key=lambda x: x['genero'])
-        elif filtro == "artista":
+        if filtro == "artista":
             # Obtener los últimos 3 artistas escuchados
             canciones_ordenadas = sorted(canciones, key=lambda x: x['fecha_escucha'], reverse=True)
             artistas_recientes = []
@@ -292,23 +420,9 @@ def recomendaciones():
             for artista in artistas_recientes:
                 adicionales = canciones_por_artista[artista][1:3]  # máximo dos más
                 canciones_extra.extend(adicionales)
-
+                
             canciones = canciones_filtradas + canciones_extra
-        elif filtro == "recientes": # This seems to be a duplicate of anio sorting, assuming "recientes" by anio
-            canciones.sort(key=lambda x: x['anio'] if x['anio'] else 0, reverse=True)
-        elif filtro == "antiguas": # This seems to be a duplicate of anio sorting, assuming "antiguas" by anio
-            canciones.sort(key=lambda x: x['anio'] if x['anio'] else 0)
-        elif filtro == "mes":
-            canciones.sort(key=lambda x: x['fecha_escucha'].month if x['fecha_escucha'] else 0)
-        # elif filtro == "ciudad": # This was handled by special logic block above
-        #     canciones.sort(key=lambda x: x['ciudad'] if x['ciudad'] else "")
-        elif filtro == "escuchas":
-            canciones.sort(key=lambda x: x['escuchas'], reverse=True)
-        elif filtro == "mas_escuchadas":
-            canciones.sort(key=lambda x: x['escuchas'], reverse=True)
-        elif filtro == "menos_escuchadas":
-            canciones.sort(key=lambda x: x['escuchas'])
-
+        
         recomendaciones = canciones
 
         return render_template('recomendaciones.html', usuario=usuario, recomendaciones=recomendaciones)
