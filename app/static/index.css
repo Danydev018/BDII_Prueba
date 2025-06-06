@@ -432,21 +432,65 @@ section h3::after {
 }
 
 .releases-list {
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;           /* Cambia a fila para centrar horizontalmente */
+    justify-content: center;       /* Centra los items horizontalmente */
+    align-items: stretch;          /* Estira los items para igualar altura */
+    gap: 30px;                     /* Espacio entre items */
+    flex-wrap: wrap;               /* Permite que los items bajen en pantallas pequeñas */
 }
 
 .release-item {
     background: var(--card-bg);
-    padding: 15px 20px;
-    border-radius: 10px;
+    padding: 20px 24px;
+    border-radius: 12px;
     display: flex;
-    align-items: center;
+    flex-direction: column;        /* Apila el contenido verticalmente */
+    align-items: center;           /* Centra el contenido horizontalmente */
+    justify-content: flex-start;   /* Alinea arriba dentro de la card */
+    min-width: 220px;
+    max-width: 260px;
+    min-height: 140px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0;                     /* Elimina margen lateral */
+    flex: 1 1 220px;               /* Permite que crezcan y se ajusten */
+}
+
+.release-item h4 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+    color: var(--text-color);
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;       /* Si el nombre es muy largo, muestra ... */
+}
+
+.release-date {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+
+.release-item p {
+    color: var(--light-text);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .release-item:hover {
@@ -752,7 +796,8 @@ section h3::after {
         right: 15px;
     }
 
-    .genres-grid {
+    
+       .genres-grid {
         grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
     }
 
@@ -771,10 +816,10 @@ section h3::after {
     }
 
     .play-button.small {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
+    margin-top: 10px;
+    align-self: center;
+}
+
 
     .footer-section h4 {
         font-size: 1rem;
@@ -783,5 +828,17 @@ section h3::after {
     .social-icons a {
         font-size: 1.2rem;
         margin-right: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .releases-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+    }
+    .release-item {
+        max-width: 95vw;
+        min-width: 0;
     }
 }

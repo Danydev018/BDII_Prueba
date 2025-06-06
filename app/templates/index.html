@@ -49,29 +49,25 @@
             <div class="container">
                 <h3>Lo Más Destacado</h3>
                 <div class="featured-grid">
+                    {% for song in destacados %}
                     <div class="card">
-                        <img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Artista+Nuevo" alt="Artista o Álbum Destacado 1">
-                        <h4>Álbum de la Semana</h4>
-                        <p>Artista Genial</p>
-                        <button class="play-button"><i class="fas fa-play"></i></button>
+                        <h4>{{ song.titulo }}</h4>
+                        <p>{{ song.artista }}</p>
+                        <span class="release-date">{{ song.anio }}</span>
+                        <span class="escuchas">Escuchas: {{ song.escuchas }}</span>
+                        <button 
+                            class="play-button" 
+                            data-titulo="{{ song.titulo }}" 
+                            data-artista="{{ song.artista }}">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300x300/2a2a2a/ffffff?text=Lo+Último" alt="Artista o Álbum Destacado 2">
-                        <h4>Single Tendencia</h4>
-                        <p>Banda Increíble</p>
-                        <button class="play-button"><i class="fas fa-play"></i></button>
-                    </div>
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300x300/3a3a3a/ffffff?text=Top+Hits" alt="Artista o Álbum Destacado 3">
-                        <h4>Playlist del Mes</h4>
-                        <p>Varios Artistas</p>
-                        <button class="play-button"><i class="fas fa-play"></i></button>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
 
-	<section class="genres-section" id="genres">
+	    <section class="genres-section" id="genres">
             <div class="container">
                 <h3>Explora por Género</h3>
                 <div class="genres-grid">
@@ -89,33 +85,19 @@
             <div class="container">
                 <h3>Novedades Recientes</h3>
                 <div class="releases-list">
+                    {% for song in novedades %}
                     <div class="release-item">
-                        <img src="https://via.placeholder.com/100x100/4a4a4a/ffffff?text=Album1" alt="Portada Álbum 1">
-                        <div class="release-info">
-                            <h4>Título de la Canción/Álbum</h4>
-                            <p>Nombre del Artista</p>
-                            <span class="release-date">25 Mayo 2025</span>
-                        </div>
-                        <button class="play-button small"><i class="fas fa-play"></i></button>
+                        <h4>{{ song.titulo }}</h4>
+                        <p>{{ song.artista }}</p>
+                        <span class="release-date">{{ song.anio }}</span>
+                        <button 
+                            class="play-button" 
+                            data-titulo="{{ song.titulo }}" 
+                            data-artista="{{ song.artista }}">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
-                    <div class="release-item">
-                        <img src="https://via.placeholder.com/100x100/5a5a5a/ffffff?text=Album2" alt="Portada Álbum 2">
-                        <div class="release-info">
-                            <h4>Otro Gran Éxito</h4>
-                            <p>Artista Emergente</p>
-                            <span class="release-date">20 Mayo 2025</span>
-                        </div>
-                        <button class="play-button small"><i class="fas fa-play"></i></button>
-                    </div>
-                    <div class="release-item">
-                        <img src="https://via.placeholder.com/100x100/6a6a6a/ffffff?text=Album3" alt="Portada Álbum 3">
-                        <div class="release-info">
-                            <h4>Single Increíble</h4>
-                            <p>La Banda del Momento</p>
-                            <span class="release-date">18 Mayo 2025</span>
-                        </div>
-                        <button class="play-button small"><i class="fas fa-play"></i></button>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -151,5 +133,18 @@
             </div>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.play-button').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const titulo = btn.getAttribute('data-titulo');
+                    const artista = btn.getAttribute('data-artista');
+                    const query = encodeURIComponent(`${titulo} ${artista}`);
+                    window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
