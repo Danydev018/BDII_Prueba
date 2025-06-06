@@ -1,77 +1,99 @@
+# <h1 align="center" >🎵 🎶 RITMO PURO 🎶 🎵</h1>
 
-# Pasos Pa' desplaga esta vaina
+<p align="center">
+  <img src="repository/index.gif" width="100%">
+</p>
 
-Obviamente tener python, pip y Cassandara , previamente instalados.
-## Instalar Pip (Gestor de paquetes de python)
-Debian 12 :
+<p align="center">
+  <strong>✨ Descubre tu próxima obsesión musical ✨</strong>
+</p>
+
+---
+
+## 🚀 Sobre el Proyecto
+
+**RITMO PURO** es una aplicación web diseñada para amantes de la música que buscan descubrir nuevos artistas y canciones. Nuestra plataforma te permite explorar un vasto universo musical, ver recomendaciones personalizadas y conectar con una comunidad de apasionados por el ritmo.
+
+## 🛠️ Tecnologías Utilizadas
+
+Este proyecto ha sido construido utilizando las siguientes tecnologías:
+
+<p align="center">
+  <a href="https://www.python.org/" target="_blank">
+    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  </a>
+  <a href="https://pip.pypa.io/en/stable/" target="_blank">
+    <img src="https://img.shields.io/badge/Pip-3776AB?style=for-the-badge&logo=pypi&logoColor=white" alt="Pip">
+  </a>
+  <a href="https://cassandra.apache.org/" target="_blank">
+    <img src="https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apache-cassandra&logoColor=white" alt="Cassandra">
+  </a>
+</p>
+
+## ✅ Requisitos
+
+Antes de comenzar, asegúrate de tener instalado lo siguiente en tu entorno de desarrollo:
+
+* **Python:** `python>=3.11`
+* **Pip:** `(manejador de paquetes para Python)`
+* **Apache Cassandra:** `(Base de Datos NoSQL)`
+
+## 🏁 Cómo Empezar
+
+Sigue estos pasos para poner en marcha el proyecto en tu máquina local.
+
+### 1. Clona el Repositorio
+
 ```bash
-  sudo apt install python3-pip
-```
-## Crear entorno virtual (Python) y Crear la DB
-
- Clonar el repositorio
-
-```bash
-  git clone https://github.com/cockr04ch/BDII_Prueba 
+  git clone https://github.com/cockr04ch/BDII_Prueba
   cd BDII_Prueba
 ```
-Una vez dentro de la carpeta, crear el entorno virtual de python.
+
+### 2. Crea un Entorno Virtual
+
+Es una buena práctica trabajar dentro de un entorno virtual.
+
 ```bash
-  python3 -m venv venv
-```
-Activar el entorno de python
-```bash
-  source venv/bin/activate
-```
-Bajar Dependencias del proyecto!
-```bash
-  pip install -r requirements.txt 
+# Para Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Para macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-## crear la DB con su respectiva keyspace
-El script que les deje creara automaticamente la keyspace y las tablas : 
-*OJO , ya Cassandra debe estar corriendo(activo)
+### 3. Instala las Dependencias
+
+Utiliza `pip` para instalar todas las librerías necesarias que se encuentran en el archivo `requirements.txt`.
+
+```bash
+pip install -r requirements.txt
+```
+
+*(Nota: Asegúrate de estar en el directorio raiz , estara un archivo `requirements.txt` necesario para la instalacion de las librerias.)*
+
+### 4. Configura la Base de Datos
+
+Asegúrate de que tu instancia de Cassandra esté en funcionamiento. Deberás configurar la conexión en el archivo de configuración del proyecto.
+Para Facilitar la creacion de las Keyspace y tablas pruebe a ejecutar el script database.py
 ```bash
 python database.py
 ```
-Una vez descargadas las dependencias, lanzar el proyecto : 
-```bash
-   python app/app.py
-```
 
- ## Importar Datos a la DB mediante los CSV
- 
- La carpeta csv contiene datos para insertar en la tablas, tienen que hacerlo directemente de Cassandra(cqlsh)
+*(Este Script configurara la conexión a Cassandra, como la creación del keyspace, tablas, etc.)*
+
+### 5. Ejecuta la Aplicación
 
 ```bash
-cqlsh
+python app/app.py
 ```
 
-usar la Keyspace antes creada
+¡Y listo! Abre tu navegador y visita `http://127.0.0.1:5000` (o el puerto que hayas configurado).
 
-```bash
-USE app_music ;
-```
+---
 
-Comando para insertar datos, dentro de las comillas poner la ruta en la que se encuntra el csv , OJO no pongan los <> :
-ejemplo con song : 
 
-```bash
-COPY song (cacion_id , artista , genero , titulo ) FROM '<Ubicacion de los archivos .csv>' WITH HEADER = true ;
-COPY users (usuario_id , ciudad , nombre ) FROM 'Ubicacion de los archivos' WITH HEADER = true ;
-```
-## Habilitar Busqueda
-
-```bash
-cqlsh
-```
-usar la Keyspace antes creada
-
-```bash
-USE app_music ;
-```
-
-Comando para habilitar la busqueda por titulo de las canciones
-```bash
-CREATE CUSTOM INDEX IF NOT EXISTS song_titulo_sasi ON song (titulo) USING 'org.apache.cassandra.index.sasi.SASIIndex' WITH OPTIONS = {'mode': 'CONTAINS', 'analyzer_class': 'org.apache.cassandra.index.sasi.analyzer.StandardAnalyzer', 'case_sensitive': 'false'};
-```
+<p align="center">
+  Hecho con ❤️ por [ Canchis Victor | Rojas Tairon | Nuñez Daniel ]
+</p>
