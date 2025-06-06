@@ -1,7 +1,7 @@
 # routes.py
 from flask import Blueprint, render_template, request, g
 from db import get_cassandra_cluster_and_session # Importa la configuracion de cassandra de db.py
-
+from datetime import datetime
 main_bp = Blueprint('main', __name__)
 
 # Helper to convert month number to name (can be moved to a utility file if preferred)
@@ -11,32 +11,61 @@ month_names = {
     7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'
 }
 
+def format_escuchas(num):
+    if num is None:
+        return "0"
+    if num >= 1_000_000:
+        return f"{num/1_000_000:.1f}M"
+    elif num >= 1_000:
+        return f"{num/1_000:.1f}k"
+    else:
+        return str(num)
+    
 # Ruta Principal
 @main_bp.route("/")
 def home():
-    return render_template('index.html')
-
-# Ruta que Muestra Usuario Registrados de la DB
-@main_bp.route("/users")
-def users_list():
     session, cluster = get_cassandra_cluster_and_session()
-
-    users_data = []
-
+    novedades = []
+    destacados = []
     try:
         if session:
-            rows = session.execute("SELECT usuario_id, ciudad, nombre FROM users")
-            for row in rows:
-                users_data.append({
-                    'usuario_id': row.usuario_id,
-                    'nombre': row.nombre,
-                    'ciudad': row.ciudad
-                    })
-            return render_template('users.html', users=users_data)
-        else:
-            return "<p>Error: No se pudo conectar a la base de datos de Cassandra.</p>"
+            # Canciones del presente año para Novedades
+            current_year = datetime.now().year
+            rows_novedades = session.execute(
+                "SELECT cancion_id, titulo, artista, genero, anio FROM recomendaciones WHERE anio = %s ALLOW FILTERING",
+                (current_year,)
+            )
+            novedades = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio
+                }
+                for row in rows_novedades
+            ][:3]
+
+            # Tres canciones más escuchadas para Destacado
+            rows_destacados = session.execute(
+                "SELECT cancion_id, titulo, artista, genero, anio, total_escuchas FROM recomendaciones"
+            )
+            canciones_ordenadas = sorted(rows_destacados, key=lambda r: r.total_escuchas if r.total_escuchas else 0, reverse=True)
+            destacados = [
+                {
+                    'titulo': row.titulo,
+                    'artista': row.artista,
+                    'genero': row.genero,
+                    'anio': row.anio,
+                    'escuchas': format_escuchas(row.total_escuchas)
+                }
+                for row in canciones_ordenadas
+            ][:3]
+
+        return render_template('index.html', novedades=novedades, destacados=destacados)
     except Exception as e:
-        return f"<p>Error al obtener datos: {e}</p>"
+        import traceback
+        traceback.print_exc()
+        return f"<p>Error al obtener datos para la página principal: {e}</p>"
 
 # Nueva Ruta para Buscar Canciones
 @main_bp.route("/search_songs", methods=['GET'])

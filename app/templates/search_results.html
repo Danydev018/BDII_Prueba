@@ -43,7 +43,12 @@
                                     <h4>{{ song.title }}</h4>
                                     <p>{{ song.artist }}</p>
                                 </div>
-                                <button class="play-button small"><i class="fas fa-play"></i></button>
+                                <button 
+                                    class="play-button" 
+                                    data-titulo="{{ song.title}}" 
+                                    data-artista="{{ song.artist }}">
+                                    <i class="fas fa-play"></i>
+                                </button>
                             </div>
                         {% endfor %}
                     </div>
@@ -84,5 +89,22 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // ...existing code...
+
+        // Nuevo: Redirigir a YouTube al hacer click en play
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.play-button').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const titulo = btn.getAttribute('data-titulo');
+                    const artista = btn.getAttribute('data-artista');
+                    const query = encodeURIComponent(`${titulo} ${artista}`);
+                    window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

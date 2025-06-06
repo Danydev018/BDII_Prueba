@@ -115,7 +115,12 @@
                             <p>{{ rec.artista }}</p>
                             <p><strong>Género:</strong> {{ rec.genero }}</p>
                             <p><strong>Año:</strong> {{ rec.anio }}</p>
-                            <button class="play-button"><i class="fas fa-play"></i></button>
+                            <button 
+                                class="play-button" 
+                                data-titulo="{{ rec.titulo }}" 
+                                data-artista="{{ rec.artista }}">
+                                <i class="fas fa-play"></i>
+                            </button>
                         </div>
                         {% endfor %}
                     </div>
@@ -246,6 +251,19 @@
 
         generoSelect.addEventListener('change', function() {
             generoHidden.value = this.value;
+        });
+
+        // Nuevo: Redirigir a YouTube al hacer click en play
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.play-button').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const titulo = btn.getAttribute('data-titulo');
+                    const artista = btn.getAttribute('data-artista');
+                    const query = encodeURIComponent(`${titulo} ${artista}`);
+                    window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
+                });
+            });
         });
     </script>
 </body>
